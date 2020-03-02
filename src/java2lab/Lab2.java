@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 /*
@@ -20,6 +19,9 @@ public class Lab2 {
 
     public static void main(String[] args) {
         PersonalFinance pf = new PersonalFinance();
+   
+       
+
 
         try {
             ObjectInputStream inSt = new ObjectInputStream(new FileInputStream("data.txt"));
@@ -86,7 +88,9 @@ public class Lab2 {
                 String catName = scan.next();
                 System.out.println("Add category description");
                 String catDesc = scan.next();
+       //  Category ex = 
                 fin.addCategory(catName, catDesc);
+          
                 break;
             case "del":
                 System.out.println("Remove category name");
@@ -136,12 +140,11 @@ public class Lab2 {
         line = scan.next().trim();
         switch (line.toLowerCase()) {
             case "allprint": 
-                ArrayList<Expense> list = fin.getExpenses();
-                int no = 1;
-                for (Expense g : list) {
-                    System.out.printf("%3d. %s\n", no, g.toString());
-                    no++;
-                }
+            /*   for(Object o : fin.getExpenses())
+               {
+               System.out.println(o);
+               }
+               */
                 break;
             case "add":
                 System.out.println("write category name");
@@ -149,22 +152,28 @@ public class Lab2 {
                  System.out.println("write cheque nr");
                     String ec = scan.next();
                   System.out.println("expenses");
-                 double islaidos =scan.nextInt();
-                fin.addExpence(islaidos, eName, ec);
+                 double islaidos =scan.nextDouble();
+             fin.gautikategorija(eName).addExpence(islaidos, ec);
                 break;
             case "del":
+                  /*
                 System.out.println("Remove category name");
                 String catNameRem = scan.next();
                 fin.removeCategory(catNameRem);
+*/
                 break;
             case "edit":
+                /*
                 System.out.println("To edit category enter old category name ");
                 String catold = scan.next();
                 System.out.println("Now enter new category name ");
                 String catnew = scan.next();
                 fin.updateCategoryName(catold, catnew);
+                 */
                 break;
+               
             case "save":
+                  /*
                 ArrayList<Category> listToSave = fin.getCategory();
                 try {
                     FileWriter file = new FileWriter(new File("data.txt"));
@@ -175,6 +184,7 @@ public class Lab2 {
                 } catch (Exception e) {
                     System.out.println("Unable to perform operation");
                 }
+*/
                 break;
             case "quit":
                 break;

@@ -17,12 +17,27 @@ public class PersonalFinance {
     private ArrayList<Category> categoryList = new ArrayList();
      private ArrayList<Expense> expenses = new ArrayList();
 
-    public void addCategory(String name, String description) {
+    
+
+    public Category addCategory(String name, String description) {
         Category cat = new Category(name, description);
         if (!categoryList.contains(cat)) {
             categoryList.add(cat);
         }
+       return cat;
     }
+    
+     public Category gautikategorija(String vardas){
+        for(Category e: categoryList){
+            if(e.getName()==vardas){
+                return e;
+            }
+        }
+        return null;
+    }
+    
+    
+    
 
     public void removeCategory(String categoryName) {
         Category cat = new Category(categoryName, null);
@@ -47,19 +62,8 @@ public class PersonalFinance {
         return this.categoryList;
     }
     
-  
-
-    public void addExpence(Double islaidos,String category, String checkqueNo) {
-Expense naujas = new Expense(islaidos,category,checkqueNo);
-       if (!categoryList.contains(category)) {
-            expenses.add(naujas);
-    }
-    }
-
-
-    public ArrayList<Expense> getExpenses() {
-        return this.expenses;
-    }
+   
+ 
 
 
  

@@ -14,11 +14,24 @@ import java.util.ArrayList;
 public class Category {
 
     String name, description;
+    
+      private ArrayList<Expense> expenses = new ArrayList();
    
 
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    
+    public Expense addExpence(Double islaidos, String checkqueNo) {
+  Expense ex = new Expense(islaidos, checkqueNo, this);
+      expenses.add(ex);
+      return ex;
+    }
+
+        public ArrayList<Expense> getExpenses() {
+        return expenses;
     }
 
     public String getName() {
@@ -43,6 +56,8 @@ public class Category {
         return "Kategorija: " + "name = " + this.name
                 + ", aprasas = " + this.description + " ";
     }
+
+  
     
     
     
