@@ -15,7 +15,7 @@ import java.util.Date;
 public class PersonalFinance {
 
     private ArrayList<Category> categoryList = new ArrayList();
-     private ArrayList<Expense> expenses = new ArrayList();
+    // private ArrayList<Expense> expenses = new ArrayList();
 
     
 
@@ -29,7 +29,7 @@ public class PersonalFinance {
     
      public Category gautikategorija(String vardas){
         for(Category e: categoryList){
-            if(e.getName()==vardas){
+            if(e.getName().equals(vardas)){
                 return e;
             }
         }

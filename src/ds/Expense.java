@@ -1,23 +1,20 @@
-
 package ds;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Expense {
-    private String checkqueNo = "-";
-   private Double islaidos;
-          private ArrayList<Category> categoryList = new ArrayList();
-   
 
-    public Expense(Double islaidos, String checkqueNo,Category cat) {
+    private String checkqueNo = "-";
+    private String islaidos;
+    private ArrayList<Category> categoryList = new ArrayList();
+
+    public Expense(String islaidos, String checkqueNo, Category cat) {
         categoryList.add(cat);
         this.islaidos = islaidos;
-        this.checkqueNo= checkqueNo;
-        
-    }
+        this.checkqueNo = checkqueNo;
 
- 
+    }
 
     public String getCheckqueNo() {
         return checkqueNo;
@@ -27,16 +24,17 @@ public class Expense {
         this.checkqueNo = checkqueNo;
     }
 
-
-    public Double getIslaidos() {
+    public String getIslaidos() {
         return islaidos;
     }
 
-    public void setIslaidos(Double islaidos) {
+    public void setIslaidos(String islaidos) {
         this.islaidos = islaidos;
     }
 
-  
+    @Override
+    public String toString() {
+        return "Expense{" + "checkqueNo=" + checkqueNo + ", islaidos=" + islaidos + ", categoryList=" + categoryList + '}';
+    }
 
-  
 }

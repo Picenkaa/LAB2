@@ -24,7 +24,7 @@ public class Category {
     }
 
     
-    public Expense addExpence(Double islaidos, String checkqueNo) {
+    public Expense addExpence(String islaidos, String checkqueNo) {
   Expense ex = new Expense(islaidos, checkqueNo, this);
       expenses.add(ex);
       return ex;

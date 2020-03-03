@@ -16,10 +16,14 @@ import java.util.Scanner;
  * and open the template in the editor.
  */
 public class Lab2 {
-
+ static Category cat;
     public static void main(String[] args) {
         PersonalFinance pf = new PersonalFinance();
-   Category ct = null;
+      
+      
+       
+         
+   
    
        
 
@@ -49,7 +53,7 @@ public class Lab2 {
                     categoryControl(scr, pf);
                     break;
                 case "e":
-                    expenseControl(scr, pf, ct);
+                    expenseControl(scr, pf);
                     break;
                 case "i":
                     break;
@@ -90,10 +94,11 @@ public class Lab2 {
                 System.out.println("Add category description");
                 String catDesc = scan.next();
        //  Category ex = 
-                fin.addCategory(catName, catDesc);
-          
+         cat = fin.addCategory(catName, catDesc);
+         
                 break;
             case "del":
+                
                 System.out.println("Remove category name");
                 String catNameRem = scan.next();
                 fin.removeCategory(catNameRem);
@@ -125,10 +130,11 @@ public class Lab2 {
             default:
                 System.out.println("Invalid value");
                 break;
+                
         }
-
+        
     }
-     public static void expenseControl(Scanner scan, PersonalFinance fin, Category cat) {
+     public static void expenseControl(Scanner scan, PersonalFinance fin) {
         String line = "";
         System.out.println("Choose from expense option list: \n"
                 + "\tadd - add expenses to chosen category \n"
@@ -141,12 +147,13 @@ public class Lab2 {
         line = scan.next().trim();
         switch (line.toLowerCase()) {
             case "allprint": 
-              int  nr=1;
-              for(Object o : cat.getExpenses())
-               {
-               System.out.println(nr++ + ". "+ 0);
-               }
-               
+                 ArrayList<Expense> list = cat.getExpenses();
+                int no = 1;
+                for (Expense k : list) {
+                    System.out.printf("%3d. %s\n", no, k.toString());
+                    no++;
+                }
+                
                 break;
             case "add":
                 System.out.println("write category name");
@@ -154,8 +161,9 @@ public class Lab2 {
                  System.out.println("write cheque nr");
                     String ec = scan.next();
                   System.out.println("expenses");
-                 double islaidos =scan.nextDouble();
-             fin.gautikategorija(eName).addExpence(islaidos, ec);
+                 String islaidos =scan.next();
+             Expense ex = fin.gautikategorija(eName).addExpence(islaidos, ec);
+              // new Category(); 
                 break;
             case "del":
                   /*
