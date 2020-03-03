@@ -19,6 +19,7 @@ public class Lab2 {
 
     public static void main(String[] args) {
         PersonalFinance pf = new PersonalFinance();
+   Category ct = null;
    
        
 
@@ -48,7 +49,7 @@ public class Lab2 {
                     categoryControl(scr, pf);
                     break;
                 case "e":
-                    expenseControl(scr, pf);
+                    expenseControl(scr, pf, ct);
                     break;
                 case "i":
                     break;
@@ -127,7 +128,7 @@ public class Lab2 {
         }
 
     }
-     public static void expenseControl(Scanner scan, PersonalFinance fin) {
+     public static void expenseControl(Scanner scan, PersonalFinance fin, Category cat) {
         String line = "";
         System.out.println("Choose from expense option list: \n"
                 + "\tadd - add expenses to chosen category \n"
@@ -140,11 +141,12 @@ public class Lab2 {
         line = scan.next().trim();
         switch (line.toLowerCase()) {
             case "allprint": 
-            /*   for(Object o : fin.getExpenses())
+              int  nr=1;
+              for(Object o : cat.getExpenses())
                {
-               System.out.println(o);
+               System.out.println(nr++ + ". "+ 0);
                }
-               */
+               
                 break;
             case "add":
                 System.out.println("write category name");
