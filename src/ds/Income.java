@@ -20,4 +20,9 @@ public class Income {
         this.pajamos = pajamos;
     }
 
+    @Override
+    public String toString() {
+        return "Income " + "pajamos=" + pajamos + ", categoryList=" + categoryList ;
+    }
+
 }
