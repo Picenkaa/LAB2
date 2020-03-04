@@ -2,6 +2,7 @@ package java2lab;
 
 import ds.Category;
 import ds.Expense;
+import ds.Income;
 import ds.PersonalFinance;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,17 +17,11 @@ import java.util.Scanner;
  * and open the template in the editor.
  */
 public class Lab2 {
- static Category cat;
+
+    static Category cat;
+
     public static void main(String[] args) {
         PersonalFinance pf = new PersonalFinance();
-      
-      
-       
-         
-   
-   
-       
-
 
         try {
             ObjectInputStream inSt = new ObjectInputStream(new FileInputStream("data.txt"));
@@ -56,6 +51,7 @@ public class Lab2 {
                     expenseControl(scr, pf);
                     break;
                 case "i":
+                    incomeControl(scr, pf);
                     break;
                 case "b":
                     break;
@@ -93,12 +89,12 @@ public class Lab2 {
                 String catName = scan.next();
                 System.out.println("Add category description");
                 String catDesc = scan.next();
-       //  Category ex = 
-         cat = fin.addCategory(catName, catDesc);
-         
+                //  Category ex = 
+                cat = fin.addCategory(catName, catDesc);
+
                 break;
             case "del":
-                
+
                 System.out.println("Remove category name");
                 String catNameRem = scan.next();
                 fin.removeCategory(catNameRem);
@@ -125,16 +121,49 @@ public class Lab2 {
             case "quit":
                 break;
             case "load":
+                /*          Scanner s = null;
+        String pirmaEilute = null;
+        try {
+            s = new Scanner(new File("src/duomenys.txt"));
+            String gamintojas = null;
+            while (s.hasNext()) {
+                pirmaEilute = s.nextLine();
+                if (pirmaEilute.trim().endsWith(":")) {
+                    gamintojas = pirmaEilute;
+                } else {
+                    String[] duom = pirmaEilute.split(";");
+                    String modelis = duom[0];
+                    int metai = Integer.parseInt(duom[1].trim());
+                    String kuras = duom[2];
+                    double turis = Double.parseDouble(duom[3].trim());
+                    String numeris = duom[4];
+                    Automobilis auto = new Automobilis(
+                            gamintojas, modelis, metai, kuras,
+                            turis, numeris);
+                    as.add(auto);
+                }
+            }
+        } catch (Exception klaida) {
+            System.out.println("Klaida");
+            klaida.printStackTrace();
+        } finally {
+            if (s != null) {
+                s.close();
+            }
+        }
+    
+                 */
 
                 break;
             default:
                 System.out.println("Invalid value");
                 break;
-                
+
         }
-        
+
     }
-     public static void expenseControl(Scanner scan, PersonalFinance fin) {
+
+    public static void expenseControl(Scanner scan, PersonalFinance fin) {
         String line = "";
         System.out.println("Choose from expense option list: \n"
                 + "\tadd - add expenses to chosen category \n"
@@ -146,60 +175,82 @@ public class Lab2 {
 
         line = scan.next().trim();
         switch (line.toLowerCase()) {
-            case "allprint": 
-                 ArrayList<Expense> list = cat.getExpenses();
-                int no = 1;
-                for (Expense k : list) {
-                    System.out.printf("%3d. %s\n", no, k.toString());
-                    no++;
-                }
-                
-                break;
+
             case "add":
                 System.out.println("write category name");
                 String eName = scan.next();
-                 System.out.println("write cheque nr");
-                    String ec = scan.next();
-                  System.out.println("expenses");
-                 String islaidos =scan.next();
-             Expense ex = fin.gautikategorija(eName).addExpence(islaidos, ec);
-              // new Category(); 
+                System.out.println("write cheque nr");
+                String ec = scan.next();
+                System.out.println("expenses");
+                String islaidos = scan.next();
+                Expense ex = fin.gautikategorija(eName).addExpence(islaidos, ec);
+                // new Category(); 
                 break;
-            case "del":
-                  /*
-                System.out.println("Remove category name");
-                String catNameRem = scan.next();
-                fin.removeCategory(catNameRem);
-*/
+            case "print":
+                System.out.println("write category name");
+                String cName = scan.next();
+                System.out.println(fin.gautikategorija(cName).getExpenses());
                 break;
-            case "edit":
-                /*
-                System.out.println("To edit category enter old category name ");
-                String catold = scan.next();
-                System.out.println("Now enter new category name ");
-                String catnew = scan.next();
-                fin.updateCategoryName(catold, catnew);
-                 */
+            case "allprint":
+
+                ArrayList<Category> list2 = fin.getCategory();
+
+                for (Category n : list2) {
+                    System.out.println(n.toString());
+                    if (n.getExpenses() != null) {
+                        System.out.println(n.getExpenses().toString());
+                    }
+                }
+
                 break;
-               
+
             case "save":
-                  /*
                 ArrayList<Category> listToSave = fin.getCategory();
                 try {
                     FileWriter file = new FileWriter(new File("data.txt"));
-                    for (Category k : listToSave) {
-                        file.write(k.toString());
+                    for (Category b : listToSave) {
+                        file.write(b.getExpenses().toString());
                     }
                     file.close();
                 } catch (Exception e) {
                     System.out.println("Unable to perform operation");
                 }
-*/
                 break;
             case "quit":
                 break;
             case "load":
-
+                /*          Scanner s = null;
+        String pirmaEilute = null;
+        try {
+            s = new Scanner(new File("src/duomenys.txt"));
+            String gamintojas = null;
+            while (s.hasNext()) {
+                pirmaEilute = s.nextLine();
+                if (pirmaEilute.trim().endsWith(":")) {
+                    gamintojas = pirmaEilute;
+                } else {
+                    String[] duom = pirmaEilute.split(";");
+                    String modelis = duom[0];
+                    int metai = Integer.parseInt(duom[1].trim());
+                    String kuras = duom[2];
+                    double turis = Double.parseDouble(duom[3].trim());
+                    String numeris = duom[4];
+                    Automobilis auto = new Automobilis(
+                            gamintojas, modelis, metai, kuras,
+                            turis, numeris);
+                    as.add(auto);
+                }
+            }
+        } catch (Exception klaida) {
+            System.out.println("Klaida");
+            klaida.printStackTrace();
+        } finally {
+            if (s != null) {
+                s.close();
+            }
+        }
+    
+                 */
                 break;
             default:
                 System.out.println("Invalid value");
@@ -207,6 +258,65 @@ public class Lab2 {
         }
 
     }
-    
+
+    public static void incomeControl(Scanner scan, PersonalFinance fin) {
+        String line = "";
+        System.out.println("Choose from income option list: \n"
+                + "\tadd - add income to chosen category \n"
+                + "\tprint - print income from chosen category\n"
+                + "\tallprint - print all income from all categories\n"
+                + "\tsave - save category incomes to file\n"
+                + "\tload -load category incomes from file\n"
+                + "\tquit - Quit\n");
+
+        line = scan.next().trim();
+        switch (line.toLowerCase()) {
+
+            case "add":
+               System.out.println("write category name");
+                String eName = scan.next();
+                System.out.println("incomes");
+                String incom = scan.next();
+               Income in = fin.gautikategorija(eName).addIncome(incom);
+                break;
+            case "print":
+               System.out.println("write category name");
+                String cName = scan.next();
+                System.out.println(fin.gautikategorija(cName).getIncomes());
+            case "allprint":
+                  ArrayList<Category> list3 = fin.getCategory();
+
+                for (Category h : list3) {
+                    System.out.println(h.toString());
+                    if (h.getIncomes() != null) {
+                        System.out.println(h.getIncomes().toString());
+                    }
+                }
+
+                break;
+
+            case "save":
+                ArrayList<Category> listToSave = fin.getCategory();
+                try {
+                    FileWriter file = new FileWriter(new File("data.txt"));
+                    for (Category c : listToSave) {
+                        file.write(c.getIncomes().toString());
+                    }
+                    file.close();
+                } catch (Exception e) {
+                    System.out.println("Unable to perform operation");
+                }
+                break;
+            case "quit":
+                break;
+            case "load":
+             
+                break;
+            default:
+                System.out.println("Invalid value");
+                break;
+        }
+
+    }
 
 }

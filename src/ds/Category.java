@@ -16,6 +16,7 @@ public class Category {
     String name, description;
     
       private ArrayList<Expense> expenses = new ArrayList();
+        private ArrayList<Income> incomes = new ArrayList();
    
 
     public Category(String name, String description) {
@@ -29,9 +30,19 @@ public class Category {
       expenses.add(ex);
       return ex;
     }
+    
+    public Income addIncome(String pajamos) {
+  Income in = new Income(pajamos, this);
+     incomes.add(in);
+      return in;
+    }
+
+    public ArrayList<Income> getIncomes() {
+        return incomes;
+    }
 
         public ArrayList<Expense> getExpenses() {
-        return expenses;
+        return this.expenses;
     }
 
     public String getName() {

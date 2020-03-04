@@ -1,1 +1,1 @@
-Kategorija: name = katinai, aprasas = gauruoti 
+[Expense checkqueNo= 150232, islaidos= 500, Expense checkqueNo= 150, islaidos= daug]

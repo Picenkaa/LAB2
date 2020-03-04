@@ -34,7 +34,7 @@ public class Expense {
 
     @Override
     public String toString() {
-        return "Expense{" + "checkqueNo=" + checkqueNo + ", islaidos=" + islaidos + ", categoryList=" + categoryList + '}';
+        return "Expense " + "checkqueNo= " + checkqueNo + ", islaidos= " + islaidos ;
     }
 
 }
