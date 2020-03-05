@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Income extends Moneytrans {
     private String pajamos;
-    private ArrayList<Category> categoryList = new ArrayList();
+   // private ArrayList<Category> categoryList = new ArrayList();
 
     public Income(String pajamos, Category cat) {
          categoryList.add(cat);

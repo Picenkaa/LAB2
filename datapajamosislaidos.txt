@@ -1,0 +1,1 @@
+[Income  pajamos= 500][Income  pajamos= 700][Expense checkqueNo= #231, islaidos= 150][Expense checkqueNo= #745, islaidos= 250]

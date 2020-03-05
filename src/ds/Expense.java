@@ -7,7 +7,7 @@ public class Expense extends  Moneytrans {
 
     private String checkqueNo = "-";
     private String islaidos;
-    private ArrayList<Category> categoryList = new ArrayList();
+  
 
     public Expense(String islaidos, String checkqueNo, Category cat) {
         categoryList.add(cat);

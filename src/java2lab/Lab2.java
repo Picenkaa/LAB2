@@ -3,6 +3,7 @@ package java2lab;
 import ds.Category;
 import ds.Expense;
 import ds.Income;
+import ds.Moneytrans;
 import ds.PersonalFinance;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 public class Lab2 {
 
     static Category cat;
+    
 
     public static void main(String[] args) {
         PersonalFinance pf = new PersonalFinance();
@@ -50,6 +52,7 @@ public class Lab2 {
                     incomeControl(scr, pf);
                     break;
                 case "b":
+                     balanseControl(scr, pf);
                     break;
                 case "f":
                     break;
@@ -177,17 +180,14 @@ public class Lab2 {
                 } else {
                     String[] duom = pirmaEilute.split(";");
                     String komentaras = duom[0];
-                    if(!(Kategorija).equals(fin.getCategory())){
-                 fin.addCategory(Kategorija, komentaras);
-                    }
-                    else{
-                        Kategorija.equals(fin.getCategory());
-                    }
+                     
+                 fin.addCategory(Kategorija, komentaras); // returinina cat jeigu nera
+        
                     String chekionr = duom[1];
                   
                     String islaideles = duom[2];
                     fin.gautikategorija(Kategorija).addExpence(islaideles, chekionr);
-                    
+                  
                 }
             }
         } catch (Exception klaida) {
@@ -274,14 +274,10 @@ public class Lab2 {
                     String[] duom = pirmaEilute.split(";");
                     String komentaras = duom[0];
                     
-                     if(!(Kategorija).equals(fin.getCategory())){
-                 fin.addCategory(Kategorija, komentaras);
-                    }
-                      else{
-                        Kategorija.equals(fin.getCategory());
-                    }
-                  
-                
+                  //   if(!fin.getCategory().contains(Kategorija)){
+                 fin.addCategory(Kategorija, komentaras);  //returinina cat jeigu nera
+                 //   }
+                     
                        String pajamos = duom[3];
                   
                     fin.gautikategorija(Kategorija).addIncome(pajamos);
@@ -307,5 +303,85 @@ public class Lab2 {
         }
 
     }
+    public static void balanseControl(Scanner scan, PersonalFinance fin) {
+        String line = "";
+        System.out.println("Choose from income option list: \n"
+                + "\tprint - print balance\n"
+                + "\tsave - save category expense income\n"
+                + "\tload -load category expense income \n"
+                + "\tquit - Quit\n");
+
+        line = scan.next().trim();
+        switch (line.toLowerCase()) {
+            case "print":
+               System.out.println("Atspausdinti banko balansa");
+             Moneytrans mt = new  Moneytrans();
+                System.out.println(mt.GetSuma());
+                break;     
+            case "save":
+                ArrayList<Category> listToSave = fin.getCategory();
+                try {
+                    FileWriter file = new FileWriter(new File("datapajamosislaidos.txt"));
+                    for (Category c : listToSave) {
+                        file.write(c.getIncomes().toString());
+                    }
+                    for (Category c : listToSave) {
+                        file.write(c.getExpenses().toString());
+                    }
+                    file.close();
+                } catch (Exception e) {
+                    System.out.println("Unable to perform operation");
+                }
+                break;
+           
+            case "load":         
+                        Scanner s = null;
+        String pirmaEilute = null;
+        try {
+            s = new Scanner(new File("src/duomenys.txt"));
+            String Kategorija = null;
+            while (s.hasNext()) {
+                pirmaEilute = s.nextLine();
+                if (pirmaEilute.trim().endsWith(":")) {
+                    Kategorija = pirmaEilute.replaceFirst(".$","");;
+                } else {
+                    String[] duom = pirmaEilute.split(";");
+                    String komentaras = duom[0];
+                     
+                 fin.addCategory(Kategorija, komentaras); // if nera cat add, else return 
+        
+                    String chekionr = duom[1];
+                  
+                    String islaideles = duom[2];
+                      String pajamos = duom[3];
+                      
+                    fin.gautikategorija(Kategorija).addExpence(islaideles, chekionr); 
+                     fin.gautikategorija(Kategorija).addIncome(pajamos);
+                }
+            }
+        } catch (Exception klaida) {
+            System.out.println("Klaida");
+            klaida.printStackTrace();
+        } finally {
+            if (s != null) {
+                s.close();
+            }
+        }
+    
+                
+                break;
+            case "quit":
+                break;
+            default:
+                System.out.println("Invalid value");
+                break;
+        }
+
+    }
+    
+    
+    
+    
+    
 
 }

@@ -8,36 +8,27 @@ package ds;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author 50556
- */
 public class PersonalFinance {
 
     private ArrayList<Category> categoryList = new ArrayList();
     // private ArrayList<Expense> expenses = new ArrayList();
-
-    
 
     public Category addCategory(String name, String description) {
         Category cat = new Category(name, description);
         if (!categoryList.contains(cat)) {
             categoryList.add(cat);
         }
-       return cat;
+        return cat;
     }
-    
-     public Category gautikategorija(String vardas){
-        for(Category e: categoryList){
-            if(e.getName().equals(vardas)){
+
+    public Category gautikategorija(String vardas) {
+        for (Category e : categoryList) {
+            if (e.getName().equals(vardas)) {
                 return e;
             }
         }
         return null;
     }
-    
-    
-    
 
     public void removeCategory(String categoryName) {
         Category cat = new Category(categoryName, null);
@@ -61,13 +52,5 @@ public class PersonalFinance {
     public ArrayList<Category> getCategory() {
         return this.categoryList;
     }
-    
-   
- 
-
-
- 
-
-  
 
 }
