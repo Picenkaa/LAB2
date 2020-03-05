@@ -155,7 +155,7 @@ public class Lab2 {
             case "save":
                 ArrayList<Category> listToSave = fin.getCategory();
                 try {
-                    FileWriter file = new FileWriter(new File("data.txt"));
+                    FileWriter file = new FileWriter(new File("dataislaidos.txt"));
                     for (Category b : listToSave) {
                         file.write(b.getExpenses().toString());
                     }
@@ -173,17 +173,15 @@ public class Lab2 {
             while (s.hasNext()) {
                 pirmaEilute = s.nextLine();
                 if (pirmaEilute.trim().endsWith(":")) {
-                    Kategorija = pirmaEilute;
+                    Kategorija = pirmaEilute.replaceFirst(".$","");;
                 } else {
                     String[] duom = pirmaEilute.split(";");
                     String komentaras = duom[0];
-                    fin.addCategory(Kategorija, komentaras);
+                 fin.addCategory(Kategorija, komentaras);
                     String chekionr = duom[1];
-                    
-                   // double turis = Double.parseDouble(duom[3].trim());
+                  
                     String islaideles = duom[2];
                     fin.gautikategorija(Kategorija).addExpence(islaideles, chekionr);
-                    
                 }
             }
         } catch (Exception klaida) {
@@ -246,7 +244,7 @@ public class Lab2 {
             case "save":
                 ArrayList<Category> listToSave = fin.getCategory();
                 try {
-                    FileWriter file = new FileWriter(new File("data.txt"));
+                    FileWriter file = new FileWriter(new File("datapajamos.txt"));
                     for (Category c : listToSave) {
                         file.write(c.getIncomes().toString());
                     }
@@ -265,7 +263,7 @@ public class Lab2 {
             while (s.hasNext()) {
                 pirmaEilute = s.nextLine();
                 if (pirmaEilute.trim().endsWith(":")) {
-                    Kategorija = pirmaEilute;
+                    Kategorija = pirmaEilute.replaceFirst(".$","");;
                 } else {
                     String[] duom = pirmaEilute.split(";");
                     String komentaras = duom[0];
