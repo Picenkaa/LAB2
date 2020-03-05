@@ -177,11 +177,17 @@ public class Lab2 {
                 } else {
                     String[] duom = pirmaEilute.split(";");
                     String komentaras = duom[0];
+                    if(!(Kategorija).equals(fin.getCategory())){
                  fin.addCategory(Kategorija, komentaras);
+                    }
+                    else{
+                        Kategorija.equals(fin.getCategory());
+                    }
                     String chekionr = duom[1];
                   
                     String islaideles = duom[2];
                     fin.gautikategorija(Kategorija).addExpence(islaideles, chekionr);
+                    
                 }
             }
         } catch (Exception klaida) {
@@ -267,8 +273,15 @@ public class Lab2 {
                 } else {
                     String[] duom = pirmaEilute.split(";");
                     String komentaras = duom[0];
-                    fin.addCategory(Kategorija, komentaras);
                     
+                     if(!(Kategorija).equals(fin.getCategory())){
+                 fin.addCategory(Kategorija, komentaras);
+                    }
+                      else{
+                        Kategorija.equals(fin.getCategory());
+                    }
+                  
+                
                        String pajamos = duom[3];
                   
                     fin.gautikategorija(Kategorija).addIncome(pajamos);
