@@ -37,13 +37,6 @@ public class Category {
       return in;
     }
 
-    public ArrayList<Income> getIncomes() {
-        return incomes;
-    }
-
-        public ArrayList<Expense> getExpenses() {
-        return this.expenses;
-    }
 
     public String getName() {
         return name;
@@ -60,6 +53,16 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+         public ArrayList<Expense> getExpenses() {
+        return this.expenses;
+    }
+         
+      public ArrayList<Income> getIncomes() {
+        return incomes;
+    }
+
+   
     
 
     @Override

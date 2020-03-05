@@ -65,9 +65,7 @@ public class Lab2 {
                 + "\tprint - Print \n"
                 + "\tadd - Add\n"
                 + "\tdel - Delete\n"
-                + "\tedit - Edit\n"
-                + "\tsave - save to file"
-                + "\tload -load from file"
+                + "\tedit - Edit\n"      
                 + "\tquit - Quit");
 
         line = scan.next().trim();
@@ -102,55 +100,9 @@ public class Lab2 {
                 String catnew = scan.next();
                 fin.updateCategoryName(catold, catnew);
                 break;
-            case "save":
-                ArrayList<Category> listToSave = fin.getCategory();
-                try {
-                    FileWriter file = new FileWriter(new File("data.txt"));
-                    for (Category k : listToSave) {
-                        file.write(k.toString());
-                    }
-                    file.close();
-                } catch (Exception e) {
-                    System.out.println("Unable to perform operation");
-                }
-                break;
             case "quit":
                 break;
-            case "load":
-                /*          Scanner s = null;
-        String pirmaEilute = null;
-        try {
-            s = new Scanner(new File("src/duomenys.txt"));
-            String gamintojas = null;
-            while (s.hasNext()) {
-                pirmaEilute = s.nextLine();
-                if (pirmaEilute.trim().endsWith(":")) {
-                    gamintojas = pirmaEilute;
-                } else {
-                    String[] duom = pirmaEilute.split(";");
-                    String modelis = duom[0];
-                    int metai = Integer.parseInt(duom[1].trim());
-                    String kuras = duom[2];
-                    double turis = Double.parseDouble(duom[3].trim());
-                    String numeris = duom[4];
-                    Automobilis auto = new Automobilis(
-                            gamintojas, modelis, metai, kuras,
-                            turis, numeris);
-                    as.add(auto);
-                }
-            }
-        } catch (Exception klaida) {
-            System.out.println("Klaida");
-            klaida.printStackTrace();
-        } finally {
-            if (s != null) {
-                s.close();
-            }
-        }
-    
-                 */
-
-                break;
+          
             default:
                 System.out.println("Invalid value");
                 break;
@@ -212,29 +164,26 @@ public class Lab2 {
                     System.out.println("Unable to perform operation");
                 }
                 break;
-            case "quit":
-                break;
-            case "load":
-                /*          Scanner s = null;
+                  case "load":
+                        Scanner s = null;
         String pirmaEilute = null;
         try {
             s = new Scanner(new File("src/duomenys.txt"));
-            String gamintojas = null;
+            String Kategorija = null;
             while (s.hasNext()) {
                 pirmaEilute = s.nextLine();
                 if (pirmaEilute.trim().endsWith(":")) {
-                    gamintojas = pirmaEilute;
+                    Kategorija = pirmaEilute;
                 } else {
                     String[] duom = pirmaEilute.split(";");
-                    String modelis = duom[0];
-                    int metai = Integer.parseInt(duom[1].trim());
-                    String kuras = duom[2];
-                    double turis = Double.parseDouble(duom[3].trim());
-                    String numeris = duom[4];
-                    Automobilis auto = new Automobilis(
-                            gamintojas, modelis, metai, kuras,
-                            turis, numeris);
-                    as.add(auto);
+                    String komentaras = duom[0];
+                    fin.addCategory(Kategorija, komentaras);
+                    String chekionr = duom[1];
+                    
+                   // double turis = Double.parseDouble(duom[3].trim());
+                    String islaideles = duom[2];
+                    fin.gautikategorija(Kategorija).addExpence(islaideles, chekionr);
+                    
                 }
             }
         } catch (Exception klaida) {
@@ -246,7 +195,9 @@ public class Lab2 {
             }
         }
     
-                 */
+                
+                break;
+            case "quit":
                 break;
             default:
                 System.out.println("Invalid value");
@@ -279,6 +230,7 @@ public class Lab2 {
                System.out.println("write category name");
                 String cName = scan.next();
                 System.out.println(fin.gautikategorija(cName).getIncomes());
+                break;
             case "allprint":
                   ArrayList<Category> list3 = fin.getCategory();
 
@@ -303,10 +255,40 @@ public class Lab2 {
                     System.out.println("Unable to perform operation");
                 }
                 break;
-            case "quit":
+           
+            case "load":  
+                Scanner s = null;
+        String pirmaEilute = null;
+        try {
+            s = new Scanner(new File("src/duomenys.txt"));
+            String Kategorija = null;
+            while (s.hasNext()) {
+                pirmaEilute = s.nextLine();
+                if (pirmaEilute.trim().endsWith(":")) {
+                    Kategorija = pirmaEilute;
+                } else {
+                    String[] duom = pirmaEilute.split(";");
+                    String komentaras = duom[0];
+                    fin.addCategory(Kategorija, komentaras);
+                    
+                       String pajamos = duom[3];
+                  
+                    fin.gautikategorija(Kategorija).addIncome(pajamos);
+                }
+            }
+        } catch (Exception klaida) {
+            System.out.println("Klaida");
+            klaida.printStackTrace();
+        } finally {
+            if (s != null) {
+                s.close();
+            }
+        }
+    
+                
+        
                 break;
-            case "load":
-             
+            case "quit":
                 break;
             default:
                 System.out.println("Invalid value");

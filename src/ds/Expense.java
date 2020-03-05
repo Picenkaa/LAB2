@@ -3,7 +3,7 @@ package ds;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Expense {
+public class Expense extends  Moneytrans {
 
     private String checkqueNo = "-";
     private String islaidos;

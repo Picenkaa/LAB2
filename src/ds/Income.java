@@ -3,7 +3,7 @@ package ds;
 
 import java.util.ArrayList;
 
-public class Income {
+public class Income extends Moneytrans {
     private String pajamos;
     private ArrayList<Category> categoryList = new ArrayList();
 
@@ -22,7 +22,11 @@ public class Income {
 
     @Override
     public String toString() {
-        return "Income " + "pajamos=" + pajamos + ", categoryList=" + categoryList ;
+        return "Income " + " pajamos= " + pajamos;
     }
+
+   
+
+  
 
 }

@@ -1,1 +1,4 @@
-Expense checkqueNo= lol, islaidos= 200
+Suo:
+grazus;#231;150;500
+Katinas:
+mielas;#745;250;700
