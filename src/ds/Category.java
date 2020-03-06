@@ -2,6 +2,7 @@
 package ds;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Category {
 
@@ -15,13 +16,13 @@ public class Category {
         this.description = description;
     }
 
-    public Expense addExpence(String islaidos, String checkqueNo) {
+    public Expense addExpence(Double islaidos, String checkqueNo) {
         Expense ex = new Expense(islaidos, checkqueNo, this);
         expenses.add(ex);
         return ex;
     }
 
-    public Income addIncome(String pajamos) {
+    public Income addIncome(Double pajamos) {
         Income in = new Income(pajamos, this);
         incomes.add(in);
         return in;
@@ -55,6 +56,31 @@ public class Category {
     public String toString() {
         return "Kategorija: " + "name = " + this.name
                 + ", aprasas = " + this.description + " ";
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Category other = (Category) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -16,6 +16,8 @@ import java.util.Scanner;
 public class Lab2 {
 
     static Category cat;
+     static Expense ex;
+      static Income in;
     
 
     public static void main(String[] args) {
@@ -134,7 +136,8 @@ public class Lab2 {
                 String ec = scan.next();
                 System.out.println("expenses");
                 String islaidos = scan.next();
-                Expense ex = fin.gautikategorija(eName).addExpence(islaidos, ec);
+                Double islaidos1= Double.parseDouble(islaidos);
+                Expense ex = fin.gautikategorija(eName).addExpence(islaidos1, ec);
                 // new Category(); 
                 break;
             case "print":
@@ -186,7 +189,8 @@ public class Lab2 {
                     String chekionr = duom[1];
                   
                     String islaideles = duom[2];
-                    fin.gautikategorija(Kategorija).addExpence(islaideles, chekionr);
+                      Double islaidos2= Double.parseDouble(islaideles);
+                    fin.gautikategorija(Kategorija).addExpence(islaidos2, chekionr);
                   
                 }
             }
@@ -228,7 +232,8 @@ public class Lab2 {
                 String eName = scan.next();
                 System.out.println("incomes");
                 String incom = scan.next();
-               Income in = fin.gautikategorija(eName).addIncome(incom);
+                  Double income1= Double.parseDouble(incom);
+               Income in = fin.gautikategorija(eName).addIncome(income1);
                 break;
             case "print":
                System.out.println("write category name");
@@ -279,8 +284,9 @@ public class Lab2 {
                  //   }
                      
                        String pajamos = duom[3];
+                       Double income12= Double.parseDouble(pajamos);
                   
-                    fin.gautikategorija(Kategorija).addIncome(pajamos);
+                    fin.gautikategorija(Kategorija).addIncome(income12);
                 }
             }
         } catch (Exception klaida) {
@@ -353,10 +359,12 @@ public class Lab2 {
                     String chekionr = duom[1];
                   
                     String islaideles = duom[2];
+                    Double ex13= Double.parseDouble(islaideles);
                       String pajamos = duom[3];
+                      Double income14= Double.parseDouble(pajamos);
                       
-                    fin.gautikategorija(Kategorija).addExpence(islaideles, chekionr); 
-                     fin.gautikategorija(Kategorija).addIncome(pajamos);
+                    fin.gautikategorija(Kategorija).addExpence(ex13, chekionr); 
+                     fin.gautikategorija(Kategorija).addIncome(income14);
                 }
             }
         } catch (Exception klaida) {

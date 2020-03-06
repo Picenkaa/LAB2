@@ -16,20 +16,23 @@ public class Moneytrans  {
     private String komentaras;
     private Date data;
     private Double suma=0.0;
+    private ArrayList<Moneytrans> mt = new ArrayList();
  
     
 public Double GetSuma(){
     Double expen=0.0;
      Double incom=0.0;
         for(Expense ex : cat.getExpenses()){
-   expen+=Double.parseDouble(ex.getIslaidos());
-       }
-        for(Income in : cat.getIncomes()){
-   incom+=Double.parseDouble(in.getPajamos());
-       }
-        expen=0-expen;
-        suma=expen+incom;
-        return suma;
+   expen+=ex.getIslaidos();
+        }
+  
+      
+      for(Income in : cat.getIncomes()){
+  incom+=in.getPajamos();
+      }
+      suma=(-1*expen)+incom;
+      
+   return suma;
     }
 
     @Override

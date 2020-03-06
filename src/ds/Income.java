@@ -4,19 +4,20 @@ package ds;
 import java.util.ArrayList;
 
 public class Income extends Moneytrans {
-    private String pajamos;
+    private Double pajamos;
    // private ArrayList<Category> categoryList = new ArrayList();
 
-    public Income(String pajamos, Category cat) {
+    public Income(Double pajamos, Category cat) {
+        
          categoryList.add(cat);
         this.pajamos = pajamos;
     }
 
-    public String getPajamos() {
+    public Double getPajamos() {
         return pajamos;
     }
 
-    public void setPajamos(String pajamos) {
+    public void setPajamos(Double pajamos) {
         this.pajamos = pajamos;
     }
 
@@ -25,8 +26,10 @@ public class Income extends Moneytrans {
         return "Income " + " pajamos= " + pajamos;
     }
 
-   
-
-  
+   @Override
+     public Double GetSuma(){
+        
+        return pajamos;
+    }
 
 }
