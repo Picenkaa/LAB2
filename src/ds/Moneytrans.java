@@ -7,13 +7,14 @@ package ds;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
-public class Moneytrans implements Comparable <Moneytrans>   {
+public class Moneytrans  {
 
     public ArrayList<Category> categoryList = new ArrayList();
     private Category cat;
     private String komentaras;
-    private Date data;
+    protected Date data;
     private Double suma=0.0;
     
    
@@ -65,10 +66,7 @@ public class Moneytrans implements Comparable <Moneytrans>   {
         return "Moneytrans " + "suma=" + suma + ' ';
     }
 
-    @Override
-    public int compareTo(Moneytrans t) {
-     return data.compareTo(t.data);
-    }
+   
     
     
 

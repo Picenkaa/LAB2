@@ -3,7 +3,7 @@ package ds;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Expense extends  Moneytrans {
+public class Expense extends  Moneytrans implements Comparable <Expense>   {
 
     private String checkqueNo = "-";
     private Double islaidos;
@@ -20,8 +20,7 @@ public class Expense extends  Moneytrans {
     @Override
      public Double getSuma() {
           
-         islaidos*=-1;
-        return islaidos;
+        return -1*islaidos;
     }
 
     public String getCheckqueNo() {
@@ -47,6 +46,9 @@ public class Expense extends  Moneytrans {
         return "Expense " + "checkqueNo= " + checkqueNo + ", islaidos= " + islaidos ;
     }
     
-    
+     @Override
+    public int compareTo(Expense t) {
+     return data.compareTo(t.data);
+    }
    
 }

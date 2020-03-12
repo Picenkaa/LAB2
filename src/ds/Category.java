@@ -22,16 +22,18 @@ public class Category {
     public Expense addExpence(Double islaidos, String checkqueNo, String komentaras, Date data) {
         Expense ex = new Expense(islaidos, checkqueNo, this, komentaras , data);
         expenses.add(ex);
+       Moneytrans mts = new Moneytrans(this,komentaras,data);
       mt.add(ex);
-      Collections.sort(mt);
+      Collections.sort(expenses);
         return ex;
     }
 
     public Income addIncome(Double pajamos, String komentaras, Date data) {
         Income in = new Income(pajamos, this, komentaras ,data);
         incomes.add(in);
+        Moneytrans mts = new Moneytrans(this,komentaras,data);
       mt.add(in);
-        Collections.sort(mt);
+        Collections.sort(incomes);
         return in;
     }
 

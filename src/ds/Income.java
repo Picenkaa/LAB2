@@ -4,10 +4,9 @@ package ds;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Income extends Moneytrans {
+public class Income extends Moneytrans implements Comparable <Income>{
     private Double pajamos;
-   // private ArrayList<Category> categoryList = new ArrayList();
-
+  
 
     public Income(Double pajamos, Category cat, String komentaras, Date data) {
         super( cat, komentaras, data);
@@ -35,5 +34,8 @@ public class Income extends Moneytrans {
         return "Income " + " pajamos= " + pajamos;
     }
 
-    
+      @Override
+    public int compareTo(Income t) {
+     return data.compareTo(t.data);
+    }
 }
