@@ -2,6 +2,8 @@
 package ds;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 
 public class Category {
@@ -10,24 +12,34 @@ public class Category {
 
     private ArrayList<Expense> expenses = new ArrayList();
     private ArrayList<Income> incomes = new ArrayList();
+     private ArrayList<Moneytrans> mt = new ArrayList();
 
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public Expense addExpence(Double islaidos, String checkqueNo) {
-        Expense ex = new Expense(islaidos, checkqueNo, this);
+    public Expense addExpence(Double islaidos, String checkqueNo, String komentaras, Date data) {
+        Expense ex = new Expense(islaidos, checkqueNo, this, komentaras , data);
         expenses.add(ex);
+      mt.add(ex);
+      Collections.sort(mt);
         return ex;
     }
 
-    public Income addIncome(Double pajamos) {
-        Income in = new Income(pajamos, this);
+    public Income addIncome(Double pajamos, String komentaras, Date data) {
+        Income in = new Income(pajamos, this, komentaras ,data);
         incomes.add(in);
+      mt.add(in);
+        Collections.sort(mt);
         return in;
     }
 
+    public ArrayList<Moneytrans> getMt() {
+        return mt;
+    }
+    
+  
     public String getName() {
         return name;
     }
@@ -51,6 +63,8 @@ public class Category {
     public ArrayList<Income> getIncomes() {
         return incomes;
     }
+    
+    
 
     @Override
     public String toString() {
@@ -82,5 +96,10 @@ public class Category {
         }
         return true;
     }
+
+
+
+  
+   
 
 }

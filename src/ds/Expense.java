@@ -9,11 +9,19 @@ public class Expense extends  Moneytrans {
     private Double islaidos;
   
 
-    public Expense(Double islaidos, String checkqueNo, Category cat) {
-        categoryList.add(cat);
+    public Expense(Double islaidos, String checkqueNo, Category cat, String komentaras, Date data) {
+        super(cat, komentaras, data);
         this.islaidos = islaidos;
         this.checkqueNo = checkqueNo;
+         categoryList.add(cat);
+    }
 
+
+    @Override
+     public Double getSuma() {
+          
+         islaidos*=-1;
+        return islaidos;
     }
 
     public String getCheckqueNo() {
@@ -25,23 +33,20 @@ public class Expense extends  Moneytrans {
     }
 
     public Double getIslaidos() {
-      
         return islaidos;
     }
 
-    public void setIslaidos(String Double) {
+    public void setIslaidos(Double islaidos) {
         this.islaidos = islaidos;
     }
+
+  
 
     @Override
     public String toString() {
         return "Expense " + "checkqueNo= " + checkqueNo + ", islaidos= " + islaidos ;
     }
     
-    @Override
-     public Double GetSuma(){
-         islaidos*=-1;
-        return islaidos;
-    }
+    
    
 }

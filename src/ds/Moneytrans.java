@@ -8,36 +8,68 @@ package ds;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Moneytrans  {
+public class Moneytrans implements Comparable <Moneytrans>   {
 
     public ArrayList<Category> categoryList = new ArrayList();
-    private String pavadinimas;
     private Category cat;
     private String komentaras;
     private Date data;
     private Double suma=0.0;
-    private ArrayList<Moneytrans> mt = new ArrayList();
- 
     
-public Double GetSuma(){
-    Double expen=0.0;
-     Double incom=0.0;
-        for(Expense ex : cat.getExpenses()){
-   expen+=ex.getIslaidos();
-        }
-  
-      
-      for(Income in : cat.getIncomes()){
-  incom+=in.getPajamos();
-      }
-      suma=(-1*expen)+incom;
-      
-   return suma;
+   
+ //ArrayList<Category> list = fin.
+
+    public Moneytrans(Category cat, String komentaras, Date data) {
+        this.komentaras = komentaras;
+        this.data = data;
     }
+
+
+    public Category getCat() {
+        return cat;
+    }
+
+    public void setCat(Category cat) {
+        this.cat = cat;
+    }
+
+    public String getKomentaras() {
+        return komentaras;
+    }
+
+    public void setKomentaras(String komentaras) {
+        this.komentaras = komentaras;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public Double getSuma() {
+        return suma;
+    }
+
+    public void setSuma(Double suma) {
+        this.suma = suma;
+    }
+
+
+
 
     @Override
     public String toString() {
         return "Moneytrans " + "suma=" + suma + ' ';
     }
+
+    @Override
+    public int compareTo(Moneytrans t) {
+     return data.compareTo(t.data);
+    }
+    
+    
 
 }

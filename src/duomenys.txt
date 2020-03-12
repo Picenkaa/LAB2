@@ -1,4 +1,4 @@
 Suo:
-grazus;#231;150;500;
+grazus;#231;150;500;daug;20/01/2020
 Katinas:
-mielas;#745;250;700;
+mielas;#745;250;700;mazai;15/03/2020

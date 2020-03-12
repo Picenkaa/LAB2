@@ -9,18 +9,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.ObjectInputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
-
 
 public class Lab2 {
 
     static Category cat;
-     static Expense ex;
-      static Income in;
-    
+    static Expense ex;
+    static Income in;
+   
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         PersonalFinance pf = new PersonalFinance();
 
         try {
@@ -54,7 +56,7 @@ public class Lab2 {
                     incomeControl(scr, pf);
                     break;
                 case "b":
-                     balanseControl(scr, pf);
+                    balanseControl(scr, pf);
                     break;
                 case "f":
                     break;
@@ -70,7 +72,7 @@ public class Lab2 {
                 + "\tprint - Print \n"
                 + "\tadd - Add\n"
                 + "\tdel - Delete\n"
-                + "\tedit - Edit\n"      
+                + "\tedit - Edit\n"
                 + "\tquit - Quit");
 
         line = scan.next().trim();
@@ -107,7 +109,7 @@ public class Lab2 {
                 break;
             case "quit":
                 break;
-          
+
             default:
                 System.out.println("Invalid value");
                 break;
@@ -116,7 +118,7 @@ public class Lab2 {
 
     }
 
-    public static void expenseControl(Scanner scan, PersonalFinance fin) {
+    public static void expenseControl(Scanner scan, PersonalFinance fin) throws ParseException {
         String line = "";
         System.out.println("Choose from expense option list: \n"
                 + "\tadd - add expenses to chosen category \n"
@@ -136,8 +138,13 @@ public class Lab2 {
                 String ec = scan.next();
                 System.out.println("expenses");
                 String islaidos = scan.next();
-                Double islaidos1= Double.parseDouble(islaidos);
-                Expense ex = fin.gautikategorija(eName).addExpence(islaidos1, ec);
+                Double islaidos1 = Double.parseDouble(islaidos);
+                System.out.println("write comment");
+                String komentaras1 = scan.next();
+                System.out.println("write date int this format dd/MM/yyyy");
+                String sDate1 = scan.next();
+                Date data = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+               ex = fin.gautikategorija(eName).addExpence(islaidos1, ec, komentaras1, data);
                 // new Category(); 
                 break;
             case "print":
@@ -170,40 +177,45 @@ public class Lab2 {
                     System.out.println("Unable to perform operation");
                 }
                 break;
-                  case "load":
-                        Scanner s = null;
-        String pirmaEilute = null;
-        try {
-            s = new Scanner(new File("src/duomenys.txt"));
-            String Kategorija = null;
-            while (s.hasNext()) {
-                pirmaEilute = s.nextLine();
-                if (pirmaEilute.trim().endsWith(":")) {
-                    Kategorija = pirmaEilute.replaceFirst(".$","");;
-                } else {
-                    String[] duom = pirmaEilute.split(";");
-                    String komentaras = duom[0];
-                     
-                 fin.addCategory(Kategorija, komentaras); // returinina cat jeigu nera
-        
-                    String chekionr = duom[1];
-                  
-                    String islaideles = duom[2];
-                      Double islaidos2= Double.parseDouble(islaideles);
-                    fin.gautikategorija(Kategorija).addExpence(islaidos2, chekionr);
-                  
+            case "load":
+                Scanner s = null;
+                String pirmaEilute = null;
+                try {
+                    s = new Scanner(new File("src/duomenys.txt"));
+                    String Kategorija = null;
+                    while (s.hasNext()) {
+                        pirmaEilute = s.nextLine();
+                        if (pirmaEilute.trim().endsWith(":")) {
+                            Kategorija = pirmaEilute.replaceFirst(".$", "");;
+                        } else {
+                            String[] duom = pirmaEilute.split(";");
+                            String komentaras = duom[0];
+
+                            fin.addCategory(Kategorija, komentaras); // returinina cat jeigu nera
+
+                            String chekionr = duom[1];
+
+                            String islaideles = duom[2];
+
+                            String komentarass = duom[4];
+
+                            String sDate11 = duom[5];
+                            Date data1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate11);
+
+                            Double islaidos2 = Double.parseDouble(islaideles);
+                            fin.gautikategorija(Kategorija).addExpence(islaidos2, chekionr, komentarass, data1);
+
+                        }
+                    }
+                } catch (Exception klaida) {
+                    System.out.println("Klaida");
+                    klaida.printStackTrace();
+                } finally {
+                    if (s != null) {
+                        s.close();
+                    }
                 }
-            }
-        } catch (Exception klaida) {
-            System.out.println("Klaida");
-            klaida.printStackTrace();
-        } finally {
-            if (s != null) {
-                s.close();
-            }
-        }
-    
-                
+
                 break;
             case "quit":
                 break;
@@ -214,7 +226,7 @@ public class Lab2 {
 
     }
 
-    public static void incomeControl(Scanner scan, PersonalFinance fin) {
+    public static void incomeControl(Scanner scan, PersonalFinance fin) throws ParseException {
         String line = "";
         System.out.println("Choose from income option list: \n"
                 + "\tadd - add income to chosen category \n"
@@ -228,20 +240,25 @@ public class Lab2 {
         switch (line.toLowerCase()) {
 
             case "add":
-               System.out.println("write category name");
+                System.out.println("write category name");
                 String eName = scan.next();
                 System.out.println("incomes");
                 String incom = scan.next();
-                  Double income1= Double.parseDouble(incom);
-               Income in = fin.gautikategorija(eName).addIncome(income1);
+                Double income1 = Double.parseDouble(incom);
+                System.out.println("write comment");
+                String kom = scan.next();
+                System.out.println("write date int this format dd/MM/yyyy");
+                String sDate1 = scan.next();
+                Date data = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+                in = fin.gautikategorija(eName).addIncome(income1, kom, data);
                 break;
             case "print":
-               System.out.println("write category name");
+                System.out.println("write category name");
                 String cName = scan.next();
                 System.out.println(fin.gautikategorija(cName).getIncomes());
                 break;
             case "allprint":
-                  ArrayList<Category> list3 = fin.getCategory();
+                ArrayList<Category> list3 = fin.getCategory();
 
                 for (Category h : list3) {
                     System.out.println(h.toString());
@@ -264,42 +281,42 @@ public class Lab2 {
                     System.out.println("Unable to perform operation");
                 }
                 break;
-           
-            case "load":  
+
+            case "load":
                 Scanner s = null;
-        String pirmaEilute = null;
-        try {
-            s = new Scanner(new File("src/duomenys.txt"));
-            String Kategorija = null;
-            while (s.hasNext()) {
-                pirmaEilute = s.nextLine();
-                if (pirmaEilute.trim().endsWith(":")) {
-                    Kategorija = pirmaEilute.replaceFirst(".$","");;
-                } else {
-                    String[] duom = pirmaEilute.split(";");
-                    String komentaras = duom[0];
-                    
-                  //   if(!fin.getCategory().contains(Kategorija)){
-                 fin.addCategory(Kategorija, komentaras);  //returinina cat jeigu nera
-                 //   }
-                     
-                       String pajamos = duom[3];
-                       Double income12= Double.parseDouble(pajamos);
-                  
-                    fin.gautikategorija(Kategorija).addIncome(income12);
+                String pirmaEilute = null;
+                try {
+                    s = new Scanner(new File("src/duomenys.txt"));
+                    String Kategorija = null;
+                    while (s.hasNext()) {
+                        pirmaEilute = s.nextLine();
+                        if (pirmaEilute.trim().endsWith(":")) {
+                            Kategorija = pirmaEilute.replaceFirst(".$", "");;
+                        } else {
+                            String[] duom = pirmaEilute.split(";");
+                            String komentaras = duom[0];
+
+                            fin.addCategory(Kategorija, komentaras);  //returinina cat jeigu nera
+
+                            String pajamos = duom[3];
+                            String komentarass = duom[4];
+                            String sDate11 = duom[5];
+                            Date data1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate11);
+
+                            Double income12 = Double.parseDouble(pajamos);
+
+                            fin.gautikategorija(Kategorija).addIncome(income12, komentarass, data1);
+                        }
+                    }
+                } catch (Exception klaida) {
+                    System.out.println("Klaida");
+                    klaida.printStackTrace();
+                } finally {
+                    if (s != null) {
+                        s.close();
+                    }
                 }
-            }
-        } catch (Exception klaida) {
-            System.out.println("Klaida");
-            klaida.printStackTrace();
-        } finally {
-            if (s != null) {
-                s.close();
-            }
-        }
-    
-                
-        
+
                 break;
             case "quit":
                 break;
@@ -309,6 +326,7 @@ public class Lab2 {
         }
 
     }
+
     public static void balanseControl(Scanner scan, PersonalFinance fin) {
         String line = "";
         System.out.println("Choose from income option list: \n"
@@ -320,10 +338,21 @@ public class Lab2 {
         line = scan.next().trim();
         switch (line.toLowerCase()) {
             case "print":
-               System.out.println("Atspausdinti banko balansa");
-             Moneytrans mt = new  Moneytrans();
-                System.out.println(mt.GetSuma());
-                break;     
+                
+               Double suma=0.0;
+                 ArrayList<Expense> list1 = cat.getExpenses();
+                  ArrayList<Income> list2 = cat.getIncomes();
+
+                for (Expense e : list1) {     
+                   suma+=e.getSuma();
+                }     
+                 for (Income i : list2) {     
+                   suma+=i.getSuma();
+                }   
+       
+                 System.out.println("balansinis likutis: " +suma);
+                 
+                break;
             case "save":
                 ArrayList<Category> listToSave = fin.getCategory();
                 try {
@@ -339,44 +368,49 @@ public class Lab2 {
                     System.out.println("Unable to perform operation");
                 }
                 break;
-           
-            case "load":         
-                        Scanner s = null;
-        String pirmaEilute = null;
-        try {
-            s = new Scanner(new File("src/duomenys.txt"));
-            String Kategorija = null;
-            while (s.hasNext()) {
-                pirmaEilute = s.nextLine();
-                if (pirmaEilute.trim().endsWith(":")) {
-                    Kategorija = pirmaEilute.replaceFirst(".$","");;
-                } else {
-                    String[] duom = pirmaEilute.split(";");
-                    String komentaras = duom[0];
-                     
-                 fin.addCategory(Kategorija, komentaras); // if nera cat add, else return 
-        
-                    String chekionr = duom[1];
-                  
-                    String islaideles = duom[2];
-                    Double ex13= Double.parseDouble(islaideles);
-                      String pajamos = duom[3];
-                      Double income14= Double.parseDouble(pajamos);
-                      
-                    fin.gautikategorija(Kategorija).addExpence(ex13, chekionr); 
-                     fin.gautikategorija(Kategorija).addIncome(income14);
+
+            case "load":
+                Scanner s = null;
+                String pirmaEilute = null;
+                try {
+                    s = new Scanner(new File("src/duomenys.txt"));
+                    String Kategorija = null;
+                    while (s.hasNext()) {
+                        pirmaEilute = s.nextLine();
+                        if (pirmaEilute.trim().endsWith(":")) {
+                            Kategorija = pirmaEilute.replaceFirst(".$", "");;
+                        } else {
+                            String[] duom = pirmaEilute.split(";");
+                            String komentaras = duom[0];
+
+                            fin.addCategory(Kategorija, komentaras); // if nera cat add, else return 
+
+                            String chekionr = duom[1];
+
+                            String islaideles = duom[2];
+                            Double ex13 = Double.parseDouble(islaideles);
+                            String pajamos = duom[3];
+                            Double income14 = Double.parseDouble(pajamos);
+
+                            String komentarass = duom[4];
+
+                            String sDate11 = duom[5];
+                            Date data1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate11);
+                           
+                            fin.gautikategorija(Kategorija).addExpence(ex13, chekionr, komentarass, data1);
+                            fin.gautikategorija(Kategorija).addIncome(income14, komentarass, data1);
+
+                        }
+                    }
+                } catch (Exception klaida) {
+                    System.out.println("Klaida");
+                    klaida.printStackTrace();
+                } finally {
+                    if (s != null) {
+                        s.close();
+                    }
                 }
-            }
-        } catch (Exception klaida) {
-            System.out.println("Klaida");
-            klaida.printStackTrace();
-        } finally {
-            if (s != null) {
-                s.close();
-            }
-        }
-    
-                
+
                 break;
             case "quit":
                 break;
@@ -386,10 +420,5 @@ public class Lab2 {
         }
 
     }
-    
-    
-    
-    
-    
 
 }

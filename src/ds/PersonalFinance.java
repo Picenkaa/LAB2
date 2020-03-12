@@ -6,17 +6,19 @@
 package ds;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class PersonalFinance {
 
     private ArrayList<Category> categoryList = new ArrayList();
-    // private ArrayList<Expense> expenses = new ArrayList();
+    
 
     public Category addCategory(String name, String description) {
         Category cat = new Category(name, description);
         if (!categoryList.contains(cat)) {
             categoryList.add(cat);
+          
         }
         return cat;
     }
