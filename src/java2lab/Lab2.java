@@ -191,7 +191,7 @@ public class Lab2 {
                             String[] duom = pirmaEilute.split(";");
                             String komentaras = duom[0];
 
-                            fin.addCategory(Kategorija, komentaras); // returinina cat jeigu nera
+                           cat= fin.addCategory(Kategorija, komentaras); // returinina cat jeigu nera
 
                             String chekionr = duom[1];
 
@@ -296,7 +296,7 @@ public class Lab2 {
                             String[] duom = pirmaEilute.split(";");
                             String komentaras = duom[0];
 
-                            fin.addCategory(Kategorija, komentaras);  //returinina cat jeigu nera
+                          cat =  fin.addCategory(Kategorija, komentaras);  //returinina cat jeigu nera
 
                             String pajamos = duom[3];
                             String komentarass = duom[4];
@@ -339,21 +339,25 @@ public class Lab2 {
         switch (line.toLowerCase()) {
             case "print":
                 
-               Double suma=0.0;
+               Double suma=0.0;        
+                ArrayList<Category> list = fin.getCategory();
                  ArrayList<Expense> list1 = cat.getExpenses();
                   ArrayList<Income> list2 = cat.getIncomes();
-
+                  
+                for (Category c : list) {     
+                              
                 for (Expense e : list1) {     
                    suma+=e.getSuma();
                 }     
                  for (Income i : list2) {     
                    suma+=i.getSuma();
                 }   
-       
+                }
                  System.out.println("balansinis likutis: " +suma);
                  
                 break;
             case "save":
+                
                 ArrayList<Category> listToSave = fin.getCategory();
                 try {
                     FileWriter file = new FileWriter(new File("datapajamosislaidos.txt"));
@@ -383,7 +387,7 @@ public class Lab2 {
                             String[] duom = pirmaEilute.split(";");
                             String komentaras = duom[0];
 
-                            fin.addCategory(Kategorija, komentaras); // if nera cat add, else return 
+                           cat= fin.addCategory(Kategorija, komentaras); // if nera cat add, else return 
 
                             String chekionr = duom[1];
 

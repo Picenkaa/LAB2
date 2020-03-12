@@ -1,1 +1,0 @@
-[Expense checkqueNo= #231, islaidos= 150][Expense checkqueNo= #745, islaidos= 250]

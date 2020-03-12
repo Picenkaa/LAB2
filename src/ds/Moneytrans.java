@@ -18,7 +18,7 @@ public class Moneytrans  {
     private Double suma=0.0;
     
    
- //ArrayList<Category> list = fin.
+ 
 
     public Moneytrans(Category cat, String komentaras, Date data) {
         this.komentaras = komentaras;
@@ -61,10 +61,6 @@ public class Moneytrans  {
 
 
 
-    @Override
-    public String toString() {
-        return "Moneytrans " + "suma=" + suma + ' ';
-    }
 
    
     
