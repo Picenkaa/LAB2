@@ -61,9 +61,12 @@ public class Moneytrans  {
 
 
 
+    @Override
+    public String toString() {
+        return "Moneytrans " + "suma=" + suma + ' ';
+    }
 
    
-    
-    
+   
 
 }

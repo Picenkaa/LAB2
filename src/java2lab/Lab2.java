@@ -132,7 +132,8 @@ public class Lab2 {
         switch (line.toLowerCase()) {
 
             case "add":
-                System.out.println("write category name");
+                 try {
+                System.out.println("write category name");     
                 String eName = scan.next();
                 System.out.println("write cheque nr");
                 String ec = scan.next();
@@ -143,14 +144,21 @@ public class Lab2 {
                 String komentaras1 = scan.next();
                 System.out.println("write date int this format dd/MM/yyyy");
                 String sDate1 = scan.next();
-                Date data = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+               
+   Date data = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+
+  
                ex = fin.gautikategorija(eName).addExpence(islaidos1, ec, komentaras1, data);
-                // new Category(); 
+                 }
+      catch(Exception e){System.out.println("Category doesent exist or information is entered incorrectly");break;};
                 break;
             case "print":
+                try{
                 System.out.println("write category name");
                 String cName = scan.next();
                 System.out.println(fin.gautikategorija(cName).getExpenses());
+                }
+                  catch(Exception e){System.out.println("Incorrect category name ");break;};
                 break;
             case "allprint":
 
@@ -240,6 +248,7 @@ public class Lab2 {
         switch (line.toLowerCase()) {
 
             case "add":
+                try{
                 System.out.println("write category name");
                 String eName = scan.next();
                 System.out.println("incomes");
@@ -250,12 +259,16 @@ public class Lab2 {
                 System.out.println("write date int this format dd/MM/yyyy");
                 String sDate1 = scan.next();
                 Date data = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-                in = fin.gautikategorija(eName).addIncome(income1, kom, data);
+                in = fin.gautikategorija(eName).addIncome(income1, kom, data);}
+                 catch(Exception e){System.out.println("Category doesent exist or information is entered incorrectly");break;};
                 break;
             case "print":
+                try{
                 System.out.println("write category name");
                 String cName = scan.next();
                 System.out.println(fin.gautikategorija(cName).getIncomes());
+                }
+                 catch(Exception e){System.out.println("Incorrect category name");break;};
                 break;
             case "allprint":
                 ArrayList<Category> list3 = fin.getCategory();
