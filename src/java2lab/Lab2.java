@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+
 public class Lab2 {
 
     static Category cat;
@@ -24,12 +25,14 @@ public class Lab2 {
 
     public static void main(String[] args) throws ParseException {
         PersonalFinance pf = new PersonalFinance();
+      // NewJFrame ui = new NewJFrame();
+       // ui.setVisible(true);
 
         try {
             ObjectInputStream inSt = new ObjectInputStream(new FileInputStream("data.txt"));
             pf = (PersonalFinance) inSt.readObject();
         } catch (Exception e) {
-
+  
         }
         Scanner scr = new Scanner(System.in);
         String command = "";
