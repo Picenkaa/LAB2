@@ -6,7 +6,9 @@
 package UI;
 
 import ds.Category;
+import ds.Expense;
 import ds.PersonalFinance;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class catinput extends javax.swing.JDialog {
 PersonalFinance a = null;
+Category cat;
 
     /**
      * Creates new form catinput
@@ -106,12 +109,13 @@ PersonalFinance a = null;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        String pav = this.k_pavadinimas.getText();
         String aprasas = this.k_aprasas.getText();
-        boolean ok =a.addCategory(pav, aprasas);
-        if(ok){
+        cat = a.addCategory(pav, aprasas);
+        if(cat==null){
             this.dispose();
         }else{
             JOptionPane.showMessageDialog(this,"this category already exists");
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
   

@@ -14,13 +14,13 @@ public class PersonalFinance {
     private ArrayList<Category> categoryList = new ArrayList();
     
 
-    public boolean addCategory(String name, String description) { // ne boolean tipo 
+    public Category addCategory(String name, String description) { // ne boolean tipo 
         Category cat = new Category(name, description);
         if (!categoryList.contains(cat)) {
             categoryList.add(cat);
-          return true;
+         return null;
         }
-        return false;
+        return cat;
     }
 
     public Category gautikategorija(String vardas) {

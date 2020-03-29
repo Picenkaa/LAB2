@@ -23,13 +23,14 @@ import javax.swing.JOptionPane;
  */
 public class Islaidu extends javax.swing.JDialog {
 PersonalFinance a = null;
-Category catas = null;
-Expense exi=null;
+Category categ = null;
+Expense expe=null;
     /**
      * Creates new form Islaidu
      */
     public Islaidu(java.awt.Frame parent, boolean modal,PersonalFinance a) {
         super(parent, modal);
+         this.a=a;
         initComponents();
        ArrayList<Category> sar = a.getCategory();
         String [] mas = new String [sar.size()];
@@ -39,6 +40,7 @@ Expense exi=null;
             i++;
         }
          cat.setModel(new javax.swing.DefaultComboBoxModel<>(mas));
+       
         
     }
 
@@ -75,7 +77,22 @@ Expense exi=null;
         jLabel4.setText("Comment:");
 
         cat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                catActionPerformed(evt);
+            }
+        });
 
+        chekque.setText("#323a23");
+
+        date.setText("04/05/2020");
+        date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateActionPerformed(evt);
+            }
+        });
+
+        comment.setText("coffe");
         comment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 commentActionPerformed(evt);
@@ -88,6 +105,9 @@ Expense exi=null;
                 jButton1ActionPerformed(evt);
             }
         });
+
+        expense.setText("3.2");
+        expense.setToolTipText("");
 
         jLabel5.setText("Expense:");
 
@@ -158,18 +178,27 @@ Expense exi=null;
                                        
               try{
             String checque = this.chekque.getText();
+           String value = (String)cat.getSelectedItem();
             String com = this.comment.getText();
             String datele = this.date.getText();
             Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(datele);
             String ex = this.expense.getText();
             Double exp = Double.parseDouble(ex);
-              exi =  catas.addExpence(exp, checque, com, date1);  
+            expe = a.gautikategorija(value).addExpence(exp, checque, com, date1);
                this.dispose();
             }catch(Exception e){
                 JOptionPane.showMessageDialog(this,"Wrong input");
             }
            
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void catActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_catActionPerformed
+
+    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateActionPerformed
 
    
 

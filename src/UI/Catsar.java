@@ -6,6 +6,7 @@
 package UI;
 
 import ds.Category;
+import ds.Expense;
 import ds.PersonalFinance;
 import java.util.ArrayList;
 
@@ -15,9 +16,7 @@ import java.util.ArrayList;
  */
 public class Catsar extends javax.swing.JFrame {
 PersonalFinance a = null;
-    /**
-     * Creates new form Catsar
-     */
+    
     public Catsar(PersonalFinance b) {
         a=b;
         initComponents();
@@ -70,6 +69,7 @@ PersonalFinance a = null;
     }// </editor-fold>//GEN-END:initComponents
 public void atnaujintilentele(){
     ArrayList<Category> sar = a.getCategory();
+    
     String [][] mas = new String [sar.size()][2];
     int i = 0;
     for(Category k:sar){

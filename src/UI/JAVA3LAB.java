@@ -15,9 +15,11 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JTextField;
+import static jdk.nashorn.internal.objects.NativeMath.round;
 
 /**
  *
@@ -25,13 +27,19 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class JAVA3LAB extends javax.swing.JFrame {
   PersonalFinance pf =new PersonalFinance();
+   catinput kiv;
   Catsar cts = new Catsar(pf);
-  Expense ex=null;
+  Category cat;
+  
+  
+ 
   Income in=null;
+  Expense ex= null;
     /**
      * Creates new form JAVA3LAB
      */
     public JAVA3LAB() {
+       
         initComponents();
          lentele();
     }
@@ -47,11 +55,7 @@ public class JAVA3LAB extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        balansinis = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -72,44 +76,24 @@ public class JAVA3LAB extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Suo", "mldc", "islaidopos", "20/10/2019",  new Float(150.0)},
-                {"Suo", "katinas", "pajamos", "28/02/2020",  new Float(160.0)},
+                {"Suo", "mldc", null, "islaidopos", null},
+                {"Suo", "katinas", null, "pajamos", null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
-                "Category", "Description", "Type", "Data", "Sum"
+                "Category", "Description", "Expense", "Income", "Sum"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setText("Date from:");
-
-        jLabel3.setText("Date to: ");
-
-        jTextField1.setText("01/04/2020");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        balansinis.setEditable(false);
+        balansinis.setText("Overall balance:");
+        balansinis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                balansinisActionPerformed(evt);
             }
         });
-
-        jTextField2.setText("01/04/2019");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("filter");
 
         jMenu1.setText("File");
 
@@ -145,6 +129,7 @@ public class JAVA3LAB extends javax.swing.JFrame {
 
         jMenu2.setText("Category");
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("New category");
         jMenuItem5.setActionCommand("");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -154,6 +139,7 @@ public class JAVA3LAB extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem6.setText("Show category list");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +152,7 @@ public class JAVA3LAB extends javax.swing.JFrame {
 
         jMenu3.setText("Finance");
 
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem7.setText("Add expenses");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,13 +161,20 @@ public class JAVA3LAB extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem7);
 
+        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem9.setText("Add income");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("About");
 
+        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem8.setText("General usage");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,36 +192,22 @@ public class JAVA3LAB extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                        .addGap(156, 156, 156)
+                        .addComponent(balansinis, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(balansinis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -240,7 +220,7 @@ public class JAVA3LAB extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        
              JFileChooser langas = new JFileChooser();
-              langas.setFileFilter (new FileNameExtensionFilter("txt filas", "txt"));
+             // langas.setFileFilter (new FileNameExtensionFilter("txt filas", "txt"));
              int rez = langas.showOpenDialog(null);
              if(rez== JFileChooser.APPROVE_OPTION){
              File failas = langas.getSelectedFile();
@@ -255,25 +235,20 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-     if(pf.getCategory().size()>0){
-        Islaidu isl = new Islaidu(this,true,pf);
+      Islaidu isl=new Islaidu(this,true,pf);
+        if(pf.getCategory().size()>0){
+       isl = new Islaidu(this,true,pf);
      isl.setVisible(true);
      }else{
          JOptionPane.showMessageDialog(this, "Add Category");
+         
      }
+         lentele();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
     
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         JFileChooser langas = new JFileChooser();
-        langas.setFileFilter (new FileNameExtensionFilter("txt filas", "txt"));
+       // langas.setFileFilter (new FileNameExtensionFilter("txt filas", "txt"));
              int rez = langas.showSaveDialog(this);
                if(rez== JFileChooser.APPROVE_OPTION){
         try{
@@ -287,11 +262,14 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
  }
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:// new cat
-        catinput kiv = new catinput(this,true,pf);
+     kiv = new catinput(this,true,pf);
+     cat = kiv.cat;
         kiv.setVisible(true);
          cts.atnaujintilentele();
+        
          lentele();
            cts.repaint();
+          
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -303,33 +281,91 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
       JOptionPane.showMessageDialog(this,"This is a basic program for controlling your personal finance.\n"
               + "It contains Categories,expenses,includes,and overall balance.");
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+       Pajamu paj=new Pajamu(this,true,pf);
+        if(pf.getCategory().size()>0){
+      paj = new Pajamu(this,true,pf);
+     paj.setVisible(true);
+     }else{
+         JOptionPane.showMessageDialog(this, "Add Category");
+         
+     }
+         lentele();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    private void balansinisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balansinisActionPerformed
+         
+            
+    }//GEN-LAST:event_balansinisActionPerformed
    
     public void lentele(){
+      
          ArrayList<Category> sar = pf.getCategory();
+        
+          
+           
     String [][] mas = new String [sar.size()][5];
     int i = 0;
-    for(Category k:sar){
+    Double plus = 0.0;
+    Double minus = 0.0;
+    Double plumin = 0.0;
+    for(Category k:sar){    
+        int j=0;
         mas[i][0] = k.getName();
         mas[i][1] = k.getDescription();
-     //    mas[i][2] = 
-         // mas[i][3] = k.getDescription();
-         //  mas[i][4] = k.getDescription();
-        i++;
+         
+     
+          ArrayList<Expense> saraselis = pf.gautikategorija(k.getName()).getExpenses();
+           double[] sume = {0.00};
+           for(Expense x:saraselis){
+               sume[j]+=x.getIslaidos();
+           minus+= x.getIslaidos();
+               round(sume,2);
+                mas[i][2] =Arrays.toString(sume);
+             
+               
+           }
+                
+           
+           ArrayList<Income> saraselis2 = pf.gautikategorija(k.getName()).getIncomes();
+           double[] pajame = {0.00};
+           for(Income e:saraselis2){  
+              
+               pajame[j]+=e.getPajamos();
+               plus+=e.getPajamos();
+                round(pajame,2);
+                mas[i][3] =Arrays.toString(pajame);
+              
+           }
+                 
+             double[] ben = {0.00};
+        ben[j]=pajame[j]-sume[j];
+         round(ben,2);
+           mas[i][4] =Arrays.toString(ben);
+        
+            i++;
+            plumin =plus-minus;
+            round(plumin,2);
     }
+    
           jTable1.setModel(new javax.swing.table.DefaultTableModel(
            mas,
             new String [] {
-                "Category", "Description", "Type", "Data", "Sum"
+                "Category", "Description", "Expene", "Income", "Sum"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+         
+        balansinis.setText("Overall balanse: "+plumin);
+          
+   
     }
     /**
      * @param args the command line arguments
@@ -367,9 +403,7 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField balansinis;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -386,7 +420,5 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

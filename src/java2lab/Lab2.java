@@ -437,8 +437,7 @@ public class Lab2 {
             default:
                 System.out.println("Invalid value");
                 break;
-        }
-
+        }  
     }
 
 }
