@@ -19,6 +19,7 @@ import java.util.Arrays;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import static jdk.nashorn.internal.objects.NativeMath.round;
 
 /**
@@ -29,6 +30,8 @@ public class JAVA3LAB extends javax.swing.JFrame {
   PersonalFinance pf =new PersonalFinance();
    catinput kiv;
   Catsar cts = new Catsar(pf);
+   Islaidusar is = new Islaidusar(pf);
+   pajamusar paj = new pajamusar(pf);
   Category cat;
   
   
@@ -65,9 +68,12 @@ public class JAVA3LAB extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
 
@@ -76,8 +82,8 @@ public class JAVA3LAB extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Suo", "mldc", null, "islaidopos", null},
-                {"Suo", "katinas", null, "pajamos", null},
+                {"Labas", "ka", "tu", "?", null},
+                {"", "", null, "", null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}
             },
@@ -148,6 +154,15 @@ public class JAVA3LAB extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem6);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Delete or edit category");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Finance");
@@ -169,6 +184,24 @@ public class JAVA3LAB extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem9);
+
+        jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem10.setText("Expenses");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem10);
+
+        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem11.setText("Incomes");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem11);
 
         jMenuBar1.add(jMenu3);
 
@@ -194,19 +227,19 @@ public class JAVA3LAB extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(156, 156, 156)
-                        .addComponent(balansinis, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addGap(346, 346, 346)
+                        .addComponent(balansinis)))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(balansinis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(balansinis)
                 .addGap(30, 30, 30))
         );
 
@@ -220,18 +253,22 @@ public class JAVA3LAB extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        
              JFileChooser langas = new JFileChooser();
-             // langas.setFileFilter (new FileNameExtensionFilter("txt filas", "txt"));
+              langas.setFileFilter (new FileNameExtensionFilter("pf filas", "pf"));
              int rez = langas.showOpenDialog(null);
              if(rez== JFileChooser.APPROVE_OPTION){
              File failas = langas.getSelectedFile();
                      try{
-            ObjectInputStream inSt = new ObjectInputStream(new FileInputStream(failas));
-            pf = (PersonalFinance) inSt.readObject();
-             inSt.close();
+            ObjectInputStream out = new ObjectInputStream(new FileInputStream(failas));
+            pf = (PersonalFinance) out.readObject(); 
+            out.close();
         } catch (Exception e) {
 JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOptionPane.ERROR_MESSAGE);
-        }
+        } 
+                     
+                     
          }
+               
+             
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -244,11 +281,13 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
          
      }
          lentele();
+         is.atnaujintilentele5();
+        is.repaint();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
     
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         JFileChooser langas = new JFileChooser();
-       // langas.setFileFilter (new FileNameExtensionFilter("txt filas", "txt"));
+        langas.setFileFilter (new FileNameExtensionFilter("pf filas", "pf"));
              int rez = langas.showSaveDialog(this);
                if(rez== JFileChooser.APPROVE_OPTION){
         try{
@@ -283,20 +322,44 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-       Pajamu paj=new Pajamu(this,true,pf);
+       Pajamu paja=new Pajamu(this,true,pf);
         if(pf.getCategory().size()>0){
-      paj = new Pajamu(this,true,pf);
-     paj.setVisible(true);
+      paja = new Pajamu(this,true,pf);
+     paja.setVisible(true);
      }else{
          JOptionPane.showMessageDialog(this, "Add Category");
          
      }
          lentele();
+         paj.atnaujintilentele3();
+         paj.repaint();
+      
     }//GEN-LAST:event_jMenuItem9ActionPerformed
     private void balansinisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balansinisActionPerformed
          
             
     }//GEN-LAST:event_balansinisActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+          // TODO add your handling code here:// new cat
+    Delcat ct = new Delcat(this,true,pf);
+        ct.setVisible(true);
+         cts.atnaujintilentele();
+         lentele();
+           cts.repaint();
+          
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+      is.atnaujintilentele5();
+       is.setVisible(true);
+     
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+      paj.atnaujintilentele3();
+     paj.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
    
     public void lentele(){
       
@@ -346,6 +409,7 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
             i++;
             plumin =plus-minus;
             round(plumin,2);
+                    
     }
     
           jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -410,6 +474,9 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
