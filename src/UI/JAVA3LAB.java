@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java2lab.Connectiona;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -33,6 +34,7 @@ public class JAVA3LAB extends javax.swing.JFrame {
    Islaidusar is = new Islaidusar(pf);
    pajamusar paj = new pajamusar(pf);
   Category cat;
+  static Connectiona con = new Connectiona();
   
   
  

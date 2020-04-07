@@ -5,10 +5,14 @@
  */
 package UI;
 
-import ds.Category;
-import ds.Expense;
+import static UI.JAVA3LAB.con;
 import ds.PersonalFinance;
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static javafx.scene.AccessibleAttribute.COLUMN_INDEX;
 
 /**
  *
@@ -68,21 +72,39 @@ PersonalFinance a = null;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 public void atnaujintilentele(){
-    ArrayList<Category> sar = a.getCategory();
+ 
+        try {
+            
+            String sql = "SELECT KATEGORIJOS, DESCR FROM APP.PS";
+            ResultSet rsl = con.getback(sql);
+            ResultSetMetaData rsmd = rsl.getMetaData();
+           int columnsNumber = rsmd.getPrecision(WIDTH);
+           // int columnsNumber = rsmd.getColumnCount(); // RANDOM OUT OF BOUNDS KAA ???
+            String [][] mas = new String [columnsNumber][2];
+            int i=0;
+          
+                while(rsl.next()) {
+                    
+                    mas[i][0]= rsl.getString("KATEGORIJOS");
+                    mas[i][1]= rsl.getString("DESCR");
+                    i++;
+                }
+          
+            
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    mas,
+                    new String [] {
+                        "Pavadinimas", "Aprasymas"
+                    }
+            ));
+            
+            
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(Catsar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
-    String [][] mas = new String [sar.size()][2];
-    int i = 0;
-    for(Category k:sar){
-        mas[i][0] = k.getName();
-        mas[i][1] = k.getDescription();
-        i++;
-    }
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            mas,
-            new String [] {
-                "Pavadinimas", "Aprasymas"
-            }
-        ));
+   
 }
    
 

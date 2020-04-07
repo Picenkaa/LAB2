@@ -5,10 +5,15 @@
  */
 package UI;
 
+import static UI.JAVA3LAB.con;
 import ds.Category;
 import ds.Expense;
 import ds.PersonalFinance;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -108,13 +113,20 @@ Category cat;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        String pav = this.k_pavadinimas.getText();
-        String aprasas = this.k_aprasas.getText();
-        cat = a.addCategory(pav, aprasas);
-        if(cat==null){
-            this.dispose();
-        }else{
+        String aprasas = this.k_aprasas.getText();  
+      String str = "SELECT KATEGORIJOS FROM APP.PS WHERE KATEGORIJOS = ?";
+       ResultSet a = con.check(str, pav);
+     
+    try {
+        if(a.next()){
             JOptionPane.showMessageDialog(this,"this category already exists");
+        }else{
+            con.add("INSERT INTO APP.PS (KATEGORIJOS,DESCR) VALUES (? , ?)",pav,aprasas);
+            this.dispose();
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(catinput.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

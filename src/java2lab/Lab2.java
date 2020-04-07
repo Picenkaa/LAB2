@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.ObjectInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,13 +24,13 @@ public class Lab2 {
     static Category cat;
     static Expense ex;
     static Income in;
+  static Connectiona con = new Connectiona();
+    
    
 
     public static void main(String[] args) throws ParseException {
         PersonalFinance pf = new PersonalFinance();
-      // NewJFrame ui = new NewJFrame();
-       // ui.setVisible(true);
-
+        
         try {
             ObjectInputStream inSt = new ObjectInputStream(new FileInputStream("data.txt"));
             pf = (PersonalFinance) inSt.readObject();
@@ -95,6 +98,7 @@ public class Lab2 {
                 String catDesc = scan.next();
                 //  Category ex = 
                 cat = fin.addCategory(catName, catDesc);
+//con.add("INSERT INTO APP.PS (KATEGORIJOS,DESCR) VALUES (? , ?)",catName,catDesc);
 
                 break;
             case "del":
