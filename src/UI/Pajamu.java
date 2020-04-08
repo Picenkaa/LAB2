@@ -187,7 +187,8 @@ java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
             
             String ex = this.income.getText();
             Double exp = Double.parseDouble(ex);
-           con.addinc("INSERT INTO APP.PS (PAJAMOS,CEKISP,DATAP) VALUES (? , ? , ?)" ,exp, com, sqlDate);
+             String str = "UPDATE APP.PS SET PAJAMOS = PAJAMOS + ?, CEKISP = ?, DATAP = ? WHERE KATEGORIJOS = ?";
+           con.addinc(str ,exp, com, sqlDate,value);
            
                this.dispose();
             }catch(Exception e){

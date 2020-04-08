@@ -68,7 +68,7 @@ public class Connectiona {
       return -1;
     }
   }
-   public int addexp (String query,double isl, String chekq, String com, Date datele){
+   public int addexp (String query,double isl, String chekq, String com, Date datele,String cat){
     try{
      // Statement statement = connection.createStatement();
       PreparedStatement pstmt = connection.prepareStatement(query);
@@ -76,7 +76,7 @@ public class Connectiona {
       pstmt.setString(2,chekq);
        pstmt.setString(3,com);
         pstmt.setDate(4, datele);
-      //     pstmt.setString(5,cat);
+    pstmt.setString(5,cat);
       return pstmt.executeUpdate();
     }catch(SQLException e){
       System.out.println("ERROR while executing add expense query");
@@ -85,13 +85,14 @@ public class Connectiona {
     }
   }
    
-    public int addinc (String query,double paj, String com, Date datele){
+    public int addinc (String query,double paj, String com, Date datele,String cat){
     try{
      // Statement statement = connection.createStatement();
       PreparedStatement pstmt = connection.prepareStatement(query);
       pstmt.setDouble(1, paj);
       pstmt.setString(2,com);
         pstmt.setDate(3, datele);
+         pstmt.setString(4,cat);
        
       return pstmt.executeUpdate();
     }catch(SQLException e){

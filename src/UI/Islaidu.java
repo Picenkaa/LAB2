@@ -203,12 +203,10 @@ java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
             
             String ex = this.expense.getText();
             Double exp = Double.parseDouble(ex);
-           // String strl = "REPLACE APP.PS SET ISLAIDOS=ISLAIDOS+?, CEKIS=?, KOMENTARAS=?, DATA=? WHERE KATEGORIJOS = ?";
-        //  String strl1 = "INSERT INTO APP.PS (ISLAIDOS,CEKIS,KOMENTARAS,DATA) VALUES(? , ? , ? , ?) ON DUPLICATE KEY UPDATE KATEGORIJOS = ?";
-           // String str = "UPDATE APP.PS SET ISLAIDOS = ISLAIDOS + ?, CEKIS = ?, KOMENTARAS = ?, DATA = ? WHERE KATEGORIJOS = ?";
-        //   String sudas = "INSERT INTO APP.PS (ISLAIDOS,CEKIS,KOMENTARAS,DATA) VALUES (? , ? , ? , ?)";
-           String strl1 = "INSERT INTO APP.PS (ISLAIDOS,CEKIS,KOMENTARAS,DATA) VALUES(? , ? , ? , ?)";
-             con.addexp(strl1 ,exp, checque, com, sqlDate);
+  
+            String str = "UPDATE APP.PS SET ISLAIDOS = ISLAIDOS + ?, CEKIS = ?, KOMENTARAS = ?, DATA = ? WHERE KATEGORIJOS = ?";
+                //  String strl1 = "INSERT INTO APP.PS (ISLAIDOS,CEKIS,KOMENTARAS,DATA) VALUES(? , ? , ? , ?)";
+             con.addexp(str ,exp, checque, com, sqlDate, value);
            // expe = a.gautikategorija(value).addExpence(exp, checque, com, date1);
                this.dispose();
             }catch(Exception e){

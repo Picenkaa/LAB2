@@ -285,9 +285,13 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
           String sql = "SELECT KATEGORIJOS, DESCR FROM APP.PS";
           ResultSet rsl = con.getback(sql);
           ResultSetMetaData rsmd = rsl.getMetaData();
+    int b=0;
           int columnsNumber = rsmd.getColumnCount();
-          
-          if(columnsNumber>0){
+         while(rsl.next()){
+          b++;
+      }
+                
+          if(b>0){
               isl = new Islaidu(this,true,pf);
               isl.setVisible(true);
           }else{
@@ -349,8 +353,11 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
           ResultSet rsl = con.getback(sql);
           ResultSetMetaData rsmd = rsl.getMetaData();
           int columnsNumber = rsmd.getColumnCount();
-          
-          if(columnsNumber>0){
+          int b=0;
+            while(rsl.next()){
+          b++;
+      }
+          if(b>0){
               paja = new Pajamu(this,true,pf);
               paja.setVisible(true);
           }else{
@@ -416,12 +423,12 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
           mas[i][2] = rsl.getString("ISLAIDOS");  
            double[] sume = {0.00};
             double[] pajame = {0.00};
-            sume[j]+=rsl.getDouble("ISLAIDOS");  
+         sume[j]+=rsl.getDouble("ISLAIDOS");  
              minus+= rsl.getDouble("ISLAIDOS");  
              
             mas[i][3] = rsl.getString("PAJAMOS"); 
             
-              pajame[j]+=rsl.getDouble("PAJAMOS");  
+            pajame[j]+=rsl.getDouble("PAJAMOS");  
                plus+=rsl.getDouble("PAJAMOS");  
  
     
