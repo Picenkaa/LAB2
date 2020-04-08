@@ -6,9 +6,16 @@
 
 package UI;
 
+import static UI.JAVA3LAB.con;
 import ds.Category;
 import ds.PersonalFinance;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -61,19 +68,26 @@ PersonalFinance a = null;
     }// </editor-fold>//GEN-END:initComponents
 
      public void atnaujintilentele3(){
-       ArrayList<Category> sar = a.getCategory();
-    
-    String [] mas = new String [sar.size()];
-    int i = 0;
-    for(Category k:sar){
-        mas[i] = k.getIncomes().toString();
-      i++;
-    }
-   jList1.setModel(new javax.swing.AbstractListModel<String>() {
+    try {
+        String sql = "SELECT PAJAMOS FROM APP.PS";
+        ResultSet rsl = con.getback(sql);
+        ResultSetMetaData rsmd = rsl.getMetaData();
+        int columnsNumber = rsmd.getPrecision(WIDTH);
+        String [] mas = new String [columnsNumber];
+     
+        int i = 0;
+        while(rsl.next()) {
+            mas[i] = rsl.getString("PAJAMOS");   
+            i++;
+        }
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = mas;
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+    } catch (SQLException ex) {
+        Logger.getLogger(pajamusar.class.getName()).log(Level.SEVERE, null, ex);
+    }
      }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> jList1;

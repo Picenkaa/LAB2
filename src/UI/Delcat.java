@@ -5,7 +5,12 @@
  */
 package UI;
 
+import static UI.JAVA3LAB.con;
 import ds.PersonalFinance;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -100,19 +105,21 @@ PersonalFinance a = null;
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(oldname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(oldname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(newname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35))
         );
 
@@ -128,25 +135,43 @@ PersonalFinance a = null;
     }//GEN-LAST:event_oldnameActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-     String pav = this.oldname.getText();
-        if(a.gautikategorija(pav)!=null){
-             a.removeCategory(pav);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(this,"Wrong category name");
+     String pavas = this.oldname.getText();
+      String str = "DELETE FROM APP.PS WHERE KATEGORIJOS = ?";
+        String str1 = "SELECT KATEGORIJOS FROM APP.PS WHERE KATEGORIJOS = ?";
+      ResultSet a = con.check(str1, pavas);
+       
+       try {
+        if(!a.next()){
+            JOptionPane.showMessageDialog(this,"Category doesnt exist");
+        }else{  
+           con.delete(str,pavas);
+           this.dispose();
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(catinput.class.getName()).log(Level.SEVERE, null, ex);
+    }
         
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         String pav = this.oldname.getText();
          String pav2 = this.newname.getText();
-        if(a.gautikategorija(pav)!=null){
-           a.updateCategoryName(pav, pav2);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(this,"Wrong category name");
+         String str = "UPDATE APP.PS SET KATEGORIJOS = ? WHERE KATEGORIJOS = ?";
+            String str1 = "SELECT KATEGORIJOS FROM APP.PS WHERE KATEGORIJOS = ?";
+      ResultSet a = con.check(str1, pav);
+      
+       try {
+        if(!a.next()){
+            JOptionPane.showMessageDialog(this,"Category doesnt exist");
+        }else{  
+           con.update(str, pav2,pav);
+           this.dispose();
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(catinput.class.getName()).log(Level.SEVERE, null, ex);
+    }
+         
+        
     }//GEN-LAST:event_editActionPerformed
 
     

@@ -42,12 +42,14 @@ public class Connectiona {
     }
   }
 
-  public int update(String query){
+  public int update(String query,String old,String newa ){
     try{
-      Statement statement = connection.createStatement();
-      return statement.executeUpdate(query);
+      PreparedStatement pstmt = connection.prepareStatement(query);
+      pstmt.setString(1, old);
+       pstmt.setString(2, newa);
+    return pstmt.executeUpdate();
     }catch(SQLException e){
-      System.out.println("ERROR while executing update query");
+      System.out.println("ERROR while updating line!");
       System.out.println(e.toString());
       return -1;
     }
@@ -66,6 +68,39 @@ public class Connectiona {
       return -1;
     }
   }
+   public int addexp (String query,double isl, String chekq, String com, Date datele){
+    try{
+     // Statement statement = connection.createStatement();
+      PreparedStatement pstmt = connection.prepareStatement(query);
+      pstmt.setDouble(1, isl);
+      pstmt.setString(2,chekq);
+       pstmt.setString(3,com);
+        pstmt.setDate(4, datele);
+      //     pstmt.setString(5,cat);
+      return pstmt.executeUpdate();
+    }catch(SQLException e){
+      System.out.println("ERROR while executing add expense query");
+      System.out.println(e.toString());
+      return -1;
+    }
+  }
+   
+    public int addinc (String query,double paj, String com, Date datele){
+    try{
+     // Statement statement = connection.createStatement();
+      PreparedStatement pstmt = connection.prepareStatement(query);
+      pstmt.setDouble(1, paj);
+      pstmt.setString(2,com);
+        pstmt.setDate(3, datele);
+       
+      return pstmt.executeUpdate();
+    }catch(SQLException e){
+      System.out.println("ERROR while executing add inc query");
+      System.out.println(e.toString());
+      return -1;
+    }
+  }
+   
       public ResultSet check(String query,String pava){
     try{
      // Statement statement = connection.createStatement();
@@ -96,10 +131,12 @@ public class Connectiona {
    
   
 
-  public int delete(String query){
+  public int  delete(String query,String vard){
     try{
-      Statement statement = connection.createStatement();
-      return statement.executeUpdate(query);
+    //  Statement statement = connection.createStatement();
+     PreparedStatement pstmt = connection.prepareStatement(query);
+      pstmt.setString(1, vard);
+    return pstmt.executeUpdate();
     }catch(SQLException e){
       System.out.println("ERROR while deleting line!");
       System.out.println(e.toString());

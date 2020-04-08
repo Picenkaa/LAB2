@@ -5,9 +5,15 @@
  */
 package UI;
 
+import static UI.JAVA3LAB.con;
 import ds.Category;
 import ds.Expense;
 import ds.PersonalFinance;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,16 +36,24 @@ Expense expe=null;
      */
     public Islaidu(java.awt.Frame parent, boolean modal,PersonalFinance a) {
         super(parent, modal);
-         this.a=a;
+    try {
+        this.a=a;
         initComponents();
-       ArrayList<Category> sar = a.getCategory();
-        String [] mas = new String [sar.size()];
+        String sql = "SELECT KATEGORIJOS, DESCR FROM APP.PS";
+        ResultSet rsl = con.getback(sql);
+        ResultSetMetaData rsmd = rsl.getMetaData();
+        int columnsNumber = rsmd.getPrecision(WIDTH);
+        String [] mas = new String [columnsNumber];
         int i=0;
-        for(Category k:sar){
-            mas[i]=k.getName();
+        
+         while(rsl.next()) {
+            mas[i]=rsl.getString("KATEGORIJOS");
             i++;
         }
-         cat.setModel(new javax.swing.DefaultComboBoxModel<>(mas));
+        cat.setModel(new javax.swing.DefaultComboBoxModel<>(mas));
+    } catch (SQLException ex) {
+        Logger.getLogger(Islaidu.class.getName()).log(Level.SEVERE, null, ex);
+    }
        
         
     }
@@ -85,7 +99,7 @@ Expense expe=null;
 
         chekque.setText("#323a23");
 
-        date.setText("04/05/2020");
+        date.setText("2020-04-08");
         date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dateActionPerformed(evt);
@@ -181,10 +195,21 @@ Expense expe=null;
            String value = (String)cat.getSelectedItem();
             String com = this.comment.getText();
             String datele = this.date.getText();
-            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(datele);
+           // Date date1=new SimpleDateFormat("YYYY-MM-DD").parse(datele);
+            
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+Date myDate = formatter.parse(datele);
+java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+            
             String ex = this.expense.getText();
             Double exp = Double.parseDouble(ex);
-            expe = a.gautikategorija(value).addExpence(exp, checque, com, date1);
+           // String strl = "REPLACE APP.PS SET ISLAIDOS=ISLAIDOS+?, CEKIS=?, KOMENTARAS=?, DATA=? WHERE KATEGORIJOS = ?";
+        //  String strl1 = "INSERT INTO APP.PS (ISLAIDOS,CEKIS,KOMENTARAS,DATA) VALUES(? , ? , ? , ?) ON DUPLICATE KEY UPDATE KATEGORIJOS = ?";
+           // String str = "UPDATE APP.PS SET ISLAIDOS = ISLAIDOS + ?, CEKIS = ?, KOMENTARAS = ?, DATA = ? WHERE KATEGORIJOS = ?";
+        //   String sudas = "INSERT INTO APP.PS (ISLAIDOS,CEKIS,KOMENTARAS,DATA) VALUES (? , ? , ? , ?)";
+           String strl1 = "INSERT INTO APP.PS (ISLAIDOS,CEKIS,KOMENTARAS,DATA) VALUES(? , ? , ? , ?)";
+             con.addexp(strl1 ,exp, checque, com, sqlDate);
+           // expe = a.gautikategorija(value).addExpence(exp, checque, com, date1);
                this.dispose();
             }catch(Exception e){
                 JOptionPane.showMessageDialog(this,"Wrong input");

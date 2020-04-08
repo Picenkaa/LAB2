@@ -9,13 +9,19 @@ import ds.Category;
 import ds.Expense;
 import ds.Income;
 import ds.PersonalFinance;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java2lab.Connectiona;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -43,7 +49,7 @@ public class JAVA3LAB extends javax.swing.JFrame {
     /**
      * Creates new form JAVA3LAB
      */
-    public JAVA3LAB() {
+    public JAVA3LAB() throws SQLException {
        
         initComponents();
          lentele();
@@ -274,17 +280,26 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-      Islaidu isl=new Islaidu(this,true,pf);
-        if(pf.getCategory().size()>0){
-       isl = new Islaidu(this,true,pf);
-     isl.setVisible(true);
-     }else{
-         JOptionPane.showMessageDialog(this, "Add Category");
-         
-     }
-         lentele();
-         is.atnaujintilentele5();
-        is.repaint();
+      try {
+          Islaidu isl=new Islaidu(this,true,pf);
+          String sql = "SELECT KATEGORIJOS, DESCR FROM APP.PS";
+          ResultSet rsl = con.getback(sql);
+          ResultSetMetaData rsmd = rsl.getMetaData();
+          int columnsNumber = rsmd.getColumnCount();
+          
+          if(columnsNumber>0){
+              isl = new Islaidu(this,true,pf);
+              isl.setVisible(true);
+          }else{
+              JOptionPane.showMessageDialog(this, "Add Category");
+              
+          }
+          lentele();
+          is.atnaujintilentele5();
+          is.repaint();
+      } catch (SQLException ex) {
+          Logger.getLogger(JAVA3LAB.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
     
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -308,7 +323,11 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
         kiv.setVisible(true);
          cts.atnaujintilentele();
         
-         lentele();
+      try {
+          lentele();
+      } catch (SQLException ex) {
+          Logger.getLogger(JAVA3LAB.class.getName()).log(Level.SEVERE, null, ex);
+      }
            cts.repaint();
           
     }//GEN-LAST:event_jMenuItem5ActionPerformed
@@ -324,17 +343,26 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-       Pajamu paja=new Pajamu(this,true,pf);
-        if(pf.getCategory().size()>0){
-      paja = new Pajamu(this,true,pf);
-     paja.setVisible(true);
-     }else{
-         JOptionPane.showMessageDialog(this, "Add Category");
-         
-     }
-         lentele();
-         paj.atnaujintilentele3();
-         paj.repaint();
+      try {
+          Pajamu paja=new Pajamu(this,true,pf);
+          String sql = "SELECT KATEGORIJOS, DESCR FROM APP.PS";
+          ResultSet rsl = con.getback(sql);
+          ResultSetMetaData rsmd = rsl.getMetaData();
+          int columnsNumber = rsmd.getColumnCount();
+          
+          if(columnsNumber>0){
+              paja = new Pajamu(this,true,pf);
+              paja.setVisible(true);
+          }else{
+              JOptionPane.showMessageDialog(this, "Add Category");
+              
+          }
+          lentele();
+          paj.atnaujintilentele3();
+          paj.repaint();
+      } catch (SQLException ex) {
+          Logger.getLogger(JAVA3LAB.class.getName()).log(Level.SEVERE, null, ex);
+      }
       
     }//GEN-LAST:event_jMenuItem9ActionPerformed
     private void balansinisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balansinisActionPerformed
@@ -347,7 +375,11 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
     Delcat ct = new Delcat(this,true,pf);
         ct.setVisible(true);
          cts.atnaujintilentele();
-         lentele();
+      try {
+          lentele();
+      } catch (SQLException ex) {
+          Logger.getLogger(JAVA3LAB.class.getName()).log(Level.SEVERE, null, ex);
+      }
            cts.repaint();
           
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -363,46 +395,36 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
      paj.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
    
-    public void lentele(){
+    public void lentele() throws SQLException{
       
-         ArrayList<Category> sar = pf.getCategory();
-        
+       String sql = "SELECT * FROM APP.PS";
+        ResultSet rsl = con.getback(sql);
+        ResultSetMetaData rsmd = rsl.getMetaData();
+        int columnsNumber = rsmd.getPrecision(WIDTH);
           
-           
-    String [][] mas = new String [sar.size()][5];
+    String [][] mas = new String [columnsNumber][5];
     int i = 0;
     Double plus = 0.0;
     Double minus = 0.0;
     Double plumin = 0.0;
-    for(Category k:sar){    
+    
+    
+       while(rsl.next()) {
         int j=0;
-        mas[i][0] = k.getName();
-        mas[i][1] = k.getDescription();
-         
-     
-          ArrayList<Expense> saraselis = pf.gautikategorija(k.getName()).getExpenses();
+        mas[i][0] = rsl.getString("KATEGORIJOS");   
+        mas[i][1] = rsl.getString("DESCR");   
+          mas[i][2] = rsl.getString("ISLAIDOS");  
            double[] sume = {0.00};
-           for(Expense x:saraselis){
-               sume[j]+=x.getIslaidos();
-           minus+= x.getIslaidos();
-               round(sume,2);
-                mas[i][2] =Arrays.toString(sume);
+            double[] pajame = {0.00};
+            sume[j]+=rsl.getDouble("ISLAIDOS");  
+             minus+= rsl.getDouble("ISLAIDOS");  
              
-               
-           }
-                
-           
-           ArrayList<Income> saraselis2 = pf.gautikategorija(k.getName()).getIncomes();
-           double[] pajame = {0.00};
-           for(Income e:saraselis2){  
-              
-               pajame[j]+=e.getPajamos();
-               plus+=e.getPajamos();
-                round(pajame,2);
-                mas[i][3] =Arrays.toString(pajame);
-              
-           }
-                 
+            mas[i][3] = rsl.getString("PAJAMOS"); 
+            
+              pajame[j]+=rsl.getDouble("PAJAMOS");  
+               plus+=rsl.getDouble("PAJAMOS");  
+ 
+    
              double[] ben = {0.00};
         ben[j]=pajame[j]-sume[j];
          round(ben,2);
@@ -463,7 +485,11 @@ JOptionPane.showMessageDialog(this, "Error while reading file ", "Error" ,  JOpt
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JAVA3LAB().setVisible(true);
+                try {
+                    new JAVA3LAB().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(JAVA3LAB.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

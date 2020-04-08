@@ -5,12 +5,20 @@
  */
 package UI;
 
+import static UI.JAVA3LAB.con;
 import ds.Category;
 import ds.Income;
 import ds.PersonalFinance;
+import static java.awt.image.ImageObserver.WIDTH;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,16 +33,24 @@ Income in = null;
      */
     public Pajamu(java.awt.Frame parent, boolean modal,PersonalFinance a) {
         super(parent, modal);
-         this.a=a;
+    try {
+        this.a=a;
         initComponents();
-         ArrayList<Category> sar = a.getCategory();
-        String [] mas = new String [sar.size()];
+        String sql = "SELECT KATEGORIJOS, DESCR FROM APP.PS";
+        ResultSet rsl = con.getback(sql);
+        ResultSetMetaData rsmd = rsl.getMetaData();
+        int columnsNumber = rsmd.getPrecision(WIDTH);
+        String [] mas = new String [columnsNumber];
         int i=0;
-        for(Category k:sar){
-            mas[i]=k.getName();
+        
+        while(rsl.next()) {
+            mas[i]=rsl.getString("KATEGORIJOS");
             i++;
         }
-         cat.setModel(new javax.swing.DefaultComboBoxModel<>(mas));
+        cat.setModel(new javax.swing.DefaultComboBoxModel<>(mas));
+    } catch (SQLException ex) {
+        Logger.getLogger(Pajamu.class.getName()).log(Level.SEVERE, null, ex);
+    }
        
         
     }
@@ -74,7 +90,7 @@ Income in = null;
 
         jLabel3.setText("Date:");
 
-        date.setText("07/04/2020");
+        date.setText("2020-04-09");
 
         comment.setText("Got refund");
         comment.setToolTipText("");
@@ -162,10 +178,17 @@ Income in = null;
            String value = (String)cat.getSelectedItem();
             String com = this.comment.getText();
             String datele = this.date.getText();
-            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(datele);
+            //Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(datele);
+            
+              DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+Date myDate = formatter.parse(datele);
+java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+            
+            
             String ex = this.income.getText();
             Double exp = Double.parseDouble(ex);
-            in = a.gautikategorija(value).addIncome(exp, com, date1);
+           con.addinc("INSERT INTO APP.PS (PAJAMOS,CEKISP,DATAP) VALUES (? , ? , ?)" ,exp, com, sqlDate);
+           
                this.dispose();
             }catch(Exception e){
                 JOptionPane.showMessageDialog(this,"Wrong input");
