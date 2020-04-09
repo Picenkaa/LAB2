@@ -9,6 +9,13 @@ package java2lab;
 import java.sql.Connection;
 import java.sql.*;
 
+/*
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Klase skirta prisijungimui prie derby apache embeeded to netbeans local serverio ir duonbazes
+Nuotraukos . png formato yra is locla serverio ir Table yra  JAVA2LAB\FOTOGRAFIJOS DUONBAZE faile
+Daugiau nuotrauku(be db dar_) info update ir commits https://github.com/Picenkaa/Personal-Finance-System
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
 
 public class Connectiona {
 
